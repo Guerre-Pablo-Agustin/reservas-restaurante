@@ -4,19 +4,13 @@ export type User = {
   apellido: string;
   email: string;
   password: string;
-  rol: "admin" | "user";
+  image: string;
 };
 
-export type Table = {
-    id: string;
-    cantidad: number;
-    location: string;
-}
 
 export type Reservation = {
   id: string;
-  tableId: string;
-  userId: string;
+  clientName: string;
   date: string;
   time: string;
   status: "pending" | "confirmed" | "canceled";

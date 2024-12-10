@@ -8,9 +8,9 @@ export const data : {
     //**users
     users : [
         {
-            id: "1",
-            nombre: "Juan",
-            apellido: "Perez",
+            id: 1,
+            name: "Juan",
+            lastName: "Perez",
             email: "admin@gmail.com",
             password: "123456",
             image: "/images/avatars/hombre.jpg"

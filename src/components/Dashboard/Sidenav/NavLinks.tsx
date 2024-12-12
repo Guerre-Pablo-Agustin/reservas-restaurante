@@ -22,7 +22,7 @@ export default function NavLinks({ hide, isMobile }: { hide: boolean; isMobile: 
           <Link
             key={link.name}
             href={link.href}
-            className={`flex  items-center gap-2 rounded-md p-3 text-sm font-medium transition-all duration-300 ${
+            className={`flex  items-center gap-2 rounded-md md:p-3 p-8 text-sm font-medium transition-all duration-300 ${
               pathName === link.href
                 ? "bg-sky-100 text-blue-600"
                 : "bg-gray-50 text-gray-800 hover:bg-sky-100 hover:text-blue-600"

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import NavLinks from "./NavLinks";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import {  motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { BsGlobe } from "react-icons/bs";
@@ -38,8 +38,8 @@ export default function SideNav() {
   };
 
   const sideNavVariants = {
-    open: { width: "240px", transition: { duration: 0.3 } },
-    collapsed: { width: "80px", transition: { duration: 0.3 } },
+    open: { width: "240px", transition: { delay: 0.125 } },
+    collapsed: { width: "80px", transition: { delay: 0.125 } },
   };
 
   return (
@@ -51,26 +51,28 @@ export default function SideNav() {
       variants={!isMobile ? sideNavVariants : undefined}
     >
       <div
-        className={`m-8 flex items-center justify-center transition-all duration-300 `}
+        className={`p-4 flex items-center justify-center md:items-start md:justify-start transition-all duration-300 `}
       >
         <Link
           href="/dashboard"
           className="flex items-center gap-2 font-bold text-blue-600"
         >
-          <BsGlobe className="h-8 w-8 rotate-[15deg]" />
+          <BsGlobe className={`h-8 w-8 rotate-[15deg] ${hide ? "m-2" : ""}`} />
           <span
-            className={`text-xl transition-opacity duration-300 ${
+            className={`text-lg flex gap-2 transition-opacity duration-300 ${
               hide ? "hidden" : "block"
             }`}
           >
-            Reservas App
+            Reservas <p>
+              App
+            </p>
           </span>
         </Link>
       </div>
 
       <div className="flex grow justify-between md:flex-col">
         <NavLinks hide={hide} isMobile={isMobile} />
-        <div className="flex flex-col items-center justify-center gap-3 p-4">
+        <div className="flex md:flex-col  md:items-start md:justify-start gap-3 p-4">
           <button
             onClick={() => setHide(!hide)}
             className="hidden text-blue-600 md:block"
@@ -94,13 +96,17 @@ export default function SideNav() {
             className="flex items-center gap-2 text-sm font-medium text-gray-800 hover:text-blue-600"
           >
             <CiPower className="h-6 w-6 text-3xl font-bold text-blue-600" />
-            <span
-              className={`transition-opacity duration-300 ${
-                hide ? "hidden" : "inline"
-              } ${isMobile ? "hidden md:block" : "block"}`}
-            >
-              Cerrar sesión
-            </span>
+            {!hide && (
+              <motion.span
+                layout
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.125 }}
+                className={`text-xs font-medium ${isMobile ? "hidden" : ""}`}
+              >
+                Cerrar Sesión
+              </motion.span>
+            )}
           </button>
         </div>
       </div>

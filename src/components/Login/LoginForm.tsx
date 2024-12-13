@@ -47,7 +47,7 @@ function LoginForm() {
       <div>
         <label
           htmlFor="email"
-          className="mb-2 block text-sm font-medium text-gray-700"
+          className="mb-2 block text-sm font-medium text-textColor"
         >
           Correo Electrónico
         </label>
@@ -56,7 +56,7 @@ function LoginForm() {
           id="email"
           value={userData.email}
           onChange={(e) => setUserData({ ...userData, email: e.target.value })}
-          className="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
           required
         />
       </div>
@@ -85,7 +85,7 @@ function LoginForm() {
         <button
           type="button"
           onClick={() => setShowPassword(!showPassword)}
-          className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 focus:outline-none"
+          className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-textColor focus:outline-none"
           aria-label={showPassword ? "Hide password" : "Show password"}
         >
           {showPassword ? (
@@ -95,7 +95,7 @@ function LoginForm() {
           )}
         </button>
       </div>
-      {error && <p className="text-sm text-red-500">{error}</p>}
+      {error && <p className="text-sm text-error">{error}</p>}
       <LoginButton />
       <div
         className="flex h-8 items-end space-x-1"
@@ -114,8 +114,8 @@ function LoginButton() {
   return (
     <button
       className={`${
-        pending ? "bg-blue-300" : "bg-blue-500"
-      } mt-4 flex w-full items-center justify-center rounded-md py-2 text-white shadow-md shadow-blue-500/50 transition-all duration-300 ease-in-out hover:bg-blue-400`}
+        pending ? "bg-blue-300" : "bg-primary"
+      } mt-4 flex w-full items-center justify-center rounded-md py-2 text-white shadow-md shadow-primary/50 transition-all duration-300 ease-in-out hover:bg-blue-400`}
       aria-disabled={pending}
       disabled={pending}
     >

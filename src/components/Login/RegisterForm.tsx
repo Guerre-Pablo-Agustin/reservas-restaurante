@@ -83,7 +83,7 @@ function RegisterForm() {
       <div>
         <label
           htmlFor="name"
-          className="mb-2 block text-sm font-medium text-gray-700"
+          className="mb-2 block text-sm font-medium text-textColor"
         >
           Nombre
         </label>
@@ -92,14 +92,14 @@ function RegisterForm() {
           id="name"
           value={userData.name}
           onChange={(e) => setUserData({ ...userData, name: e.target.value })}
-          className="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
           required
         />
       </div>
       <div>
         <label
           htmlFor="lastName"
-          className="mb-2 block text-sm font-medium text-gray-700"
+          className="mb-2 block text-sm font-medium text-textColor"
         >
           Apellido
         </label>
@@ -108,14 +108,14 @@ function RegisterForm() {
           id="lastName"
           value={userData.lastName}
           onChange={(e) => setUserData({ ...userData, lastName: e.target.value })}
-          className="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
           required
         />
       </div>
       <div>
         <label
           htmlFor="email"
-          className="mb-2 block text-sm font-medium text-gray-700"
+          className="mb-2 block text-sm font-medium text-textColor"
         >
           Correo Electrónico
         </label>
@@ -124,7 +124,7 @@ function RegisterForm() {
           id="email"
           value={userData.email}
           onChange={(e) => setUserData({ ...userData, email: e.target.value })}
-          className="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
           required
         />
       </div>
@@ -153,7 +153,7 @@ function RegisterForm() {
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700 focus:outline-none "
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500 hover:text-textColor focus:outline-none "
                 aria-label={showPassword ? "Hide password" : "Show password"}
               >
                 {showPassword ? (
@@ -204,8 +204,8 @@ function RegisterButton() {
   return (
     <button
       className={`${
-        pending ? "bg-blue-300" : "bg-blue-500"
-      } flex items-center justify-center rounded-md py-2 mt-4 w-full text-white hover:bg-blue-400 shadow-md shadow-blue-500/50 transition-all duration-300 ease-in-out gap-1`}
+        pending ? "bg-blue-300" : "bg-primary"
+      } flex items-center justify-center rounded-md py-2 mt-4 w-full text-white hover:bg-blue-400 shadow-md shadow-primary/50 transition-all duration-300 ease-in-out gap-1`}
       aria-disabled={pending}
       disabled={pending}
     >

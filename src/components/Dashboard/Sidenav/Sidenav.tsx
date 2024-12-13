@@ -86,7 +86,7 @@ export default function SideNav() {
               alt="Profile"
               width={40}
               height={40}
-              className="rounded-full"
+              className="rounded-full object-cover"
             />
           ) : (
             <div className="h-10 w-10 rounded-full bg-gray-300" />

@@ -13,10 +13,10 @@ const Links = [
 ];
 
 export default function NavLinks({
-  hide,
+  isCollapsed,
   isMobile,
 }: {
-  hide: boolean;
+  isCollapsed: boolean;
   isMobile: boolean;
 }) {
   const pathName = usePathname();
@@ -41,7 +41,7 @@ export default function NavLinks({
             }`}
           >
             <LinkIcon className="h-6 w-6 text-3xl font-bold text-primary" />
-            {!hide && (
+            {!isCollapsed && (
               <motion.span
                 layout
                 initial={{ opacity: 0, y: 12 }}

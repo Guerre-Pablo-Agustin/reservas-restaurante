@@ -1,7 +1,10 @@
+import ReserveList from "@/components/Dashboard/Home/ReserveList"
 
 const page = () => {
   return (
-    <div>page</div>
+    <div className="w-full">
+      <ReserveList />
+    </div>
   )
 }
 

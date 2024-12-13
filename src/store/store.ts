@@ -15,9 +15,10 @@ interface Store {
   reservations: Reservation[];
   setReservations: (reservations: Reservation[]) => void;
   createReservation: (reservation: Reservation) => void;
-  deleteReservation: (id: string) => void;
+  deleteReservation: (id: number) => void;
+  loadReservations: () => void;
   updateReservation: (
-    id: string,
+    id: number,
     updateReservation: Partial<Reservation>,
   ) => void;
 }
@@ -83,10 +84,19 @@ export const useStore = create<Store>((set) => ({
 
   //Reservation
   reservations: [],
-
+  
   setReservations: (reservations) => {
     set({ reservations });
     localStorage.setItem("reservations", JSON.stringify(reservations));
+  },
+
+  loadReservations: () => {
+    const reservation = localStorage.getItem("reservation");
+    if (reservation) {
+      set({ reservations: JSON.parse(reservation) });
+    } else {
+      set({ reservations: data.reservations });
+    }
   },
   createReservation: (reservation) => {
     set(() => {

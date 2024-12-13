@@ -3,7 +3,7 @@
 import Link from "next/link";
 import NavLinks from "./NavLinks";
 import Image from "next/image";
-import {  motion } from "framer-motion";
+import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { BsGlobe } from "react-icons/bs";
@@ -11,9 +11,8 @@ import { CiPower } from "react-icons/ci";
 import { useStore } from "@/store/store";
 import { BiArrowToLeft, BiArrowToRight } from "react-icons/bi";
 
-export default function SideNav() {
+export default function SideNav({ setIsCollapsed, isCollapsed }: {  setIsCollapsed: (value: boolean) => void; isCollapsed: boolean }) {
   const { user, loadUser, logout } = useStore();
-  const [hide, setHide] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
 
   const router = useRouter();
@@ -47,38 +46,42 @@ export default function SideNav() {
       className={`flex h-full w-full flex-col bg-white shadow-md ${
         isMobile ? "w-full" : "md:w-[240px]"
       }`}
-      animate={!isMobile ? (hide ? "collapsed" : "open") : undefined}
+      animate={!isMobile ? (isCollapsed ? "collapsed" : "open") : undefined}
       variants={!isMobile ? sideNavVariants : undefined}
     >
       <div
-        className={`p-4 flex items-center justify-center md:items-start md:justify-start transition-all duration-300 `}
+        className={`p-4 flex items-center justify-center md:items-start md:justify-start transition-all duration-300`}
       >
         <Link
           href="/dashboard"
           className="flex items-center gap-2 font-bold text-primary"
         >
-          <BsGlobe className={`h-8 w-8 rotate-[15deg] ${hide ? "m-2" : ""}`} />
+          <BsGlobe
+            className={`h-8 w-8 rotate-[15deg] ${isCollapsed ? "m-2" : ""}`}
+          />
           <span
             className={`text-lg flex gap-2 transition-opacity duration-300 ${
-              hide ? "hidden" : "block"
+              isCollapsed ? "hidden" : "block"
             }`}
           >
-            Reservas <p>
-              App
-            </p>
+            Reservas <p>App</p>
           </span>
         </Link>
       </div>
 
       <div className="flex grow justify-between md:flex-col">
-        <NavLinks hide={hide} isMobile={isMobile} />
-        <div className="flex md:flex-col  md:items-start md:justify-start gap-3 p-4">
+        <NavLinks isCollapsed={isCollapsed} isMobile={isMobile} />
+        <div className="flex md:flex-col md:items-start md:justify-start gap-3 p-4">
           <button
-            onClick={() => setHide(!hide)}
+            onClick={() => setIsCollapsed(!isCollapsed)}
             className="hidden text-primary md:block"
             aria-label="Toggle SideNav"
           >
-            {hide ? <BiArrowToRight size={24} /> : <BiArrowToLeft size={24} />}
+            {isCollapsed ? (
+              <BiArrowToRight size={24} />
+            ) : (
+              <BiArrowToLeft size={24} />
+            )}
           </button>
           {user?.image ? (
             <Image
@@ -96,7 +99,7 @@ export default function SideNav() {
             className="flex items-center gap-2 text-sm font-medium text-gray-800 hover:text-primary"
           >
             <CiPower className="h-6 w-6 text-3xl font-bold text-primary" />
-            {!hide && (
+            {!isCollapsed && (
               <motion.span
                 layout
                 initial={{ opacity: 0, y: 12 }}

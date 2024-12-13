@@ -9,11 +9,12 @@ export type User = {
 
 
 export type Reservation = {
-  id: string;
+  id: number;
   clientName: string;
   date: string;
   time: string;
   status: "pending" | "confirmed" | "canceled";
   quantity: number;
+  details: string;
 
 };

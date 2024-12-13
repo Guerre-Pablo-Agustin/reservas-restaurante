@@ -20,28 +20,32 @@ export const data : {
     //**reservations
     reservations : [
         {
-            id: "1",
+            id: 1,
             clientName: "Juan Perez",
             date: "2025-01-01",
             time: "10:00",
-            status: "pending",
-            quantity: 2
+            status: "canceled",
+            quantity: 2,
+            details: "Detalles de la reserva"
         },
         {
-            id: "2",
-            clientName: "Maria Perez",
+            id: 2,
+            clientName: "Maria Díaz",
             date: "2025-01-02",
             time: "10:00",
             status: "confirmed",
-            quantity: 6
+            quantity: 6,
+            details: "Detalles de la reserva"
+
         },
         {
-            id: "3",
-            clientName: "Pedro Perez",
+            id: 3,
+            clientName: "Luis sanchez",
             date: "2025-01-03",
             time: "10:00",
             status: "pending",
-            quantity: 8
+            quantity: 8,
+            details: "Detalles de la reserva"
         }
     ]
 }

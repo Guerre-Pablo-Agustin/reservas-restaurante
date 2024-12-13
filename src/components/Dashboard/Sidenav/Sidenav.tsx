@@ -55,7 +55,7 @@ export default function SideNav() {
       >
         <Link
           href="/dashboard"
-          className="flex items-center gap-2 font-bold text-blue-600"
+          className="flex items-center gap-2 font-bold text-primary"
         >
           <BsGlobe className={`h-8 w-8 rotate-[15deg] ${hide ? "m-2" : ""}`} />
           <span
@@ -75,7 +75,7 @@ export default function SideNav() {
         <div className="flex md:flex-col  md:items-start md:justify-start gap-3 p-4">
           <button
             onClick={() => setHide(!hide)}
-            className="hidden text-blue-600 md:block"
+            className="hidden text-primary md:block"
             aria-label="Toggle SideNav"
           >
             {hide ? <BiArrowToRight size={24} /> : <BiArrowToLeft size={24} />}
@@ -93,9 +93,9 @@ export default function SideNav() {
           )}
           <button
             onClick={handleLogout}
-            className="flex items-center gap-2 text-sm font-medium text-gray-800 hover:text-blue-600"
+            className="flex items-center gap-2 text-sm font-medium text-gray-800 hover:text-primary"
           >
-            <CiPower className="h-6 w-6 text-3xl font-bold text-blue-600" />
+            <CiPower className="h-6 w-6 text-3xl font-bold text-primary" />
             {!hide && (
               <motion.span
                 layout

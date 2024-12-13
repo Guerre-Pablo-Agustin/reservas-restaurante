@@ -36,11 +36,11 @@ export default function NavLinks({
             href={link.href}
             className={`flex items-start gap-2 rounded-md p-8 text-sm font-medium transition-all duration-300 md:p-3 ${
               pathName === link.href
-                ? "bg-sky-100 text-blue-600"
-                : "bg-gray-50 text-gray-800 hover:bg-sky-100 hover:text-blue-600"
+                ? "bg-sky-100 text-primary"
+                : "bg-gray-50 text-gray-800 hover:bg-sky-100 hover:text-primary"
             }`}
           >
-            <LinkIcon className="h-6 w-6 text-3xl font-bold text-blue-600" />
+            <LinkIcon className="h-6 w-6 text-3xl font-bold text-primary" />
             {!hide && (
               <motion.span
                 layout

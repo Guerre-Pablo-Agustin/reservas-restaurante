@@ -36,8 +36,8 @@ export default function NavLinks({
             href={link.href}
             className={`relative flex h-full w-full items-center rounded-md transition-colors p-1 ${
               pathName === link.href
-                ? "bg-sky-100 text-primary"
-                : "bg-gray-50 text-gray-800 hover:bg-sky-100 hover:text-primary"
+                ? "bg-red-300 text-primary"
+                : "text-gray-800 hover:bg-sky-100 hover:text-primary"
             }`}
           >
             <LinkIcon className="h-full w-10 text-3xl font-bold text-primary " />

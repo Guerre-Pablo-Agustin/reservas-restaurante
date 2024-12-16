@@ -44,7 +44,7 @@ export default function SideNav({ setIsCollapsed, isCollapsed }: {  setIsCollaps
   return (
     <motion.nav
       className={`flex h-full w-full flex-col bg-white shadow-md ${
-        isMobile ? "w-full" : "md:w-[240px]"
+        isMobile ? "w-full" : "md:w-[200px]"
       }`}
       animate={!isMobile ? (isCollapsed ? "collapsed" : "open") : undefined}
       variants={!isMobile ? sideNavVariants : undefined}
@@ -57,19 +57,19 @@ export default function SideNav({ setIsCollapsed, isCollapsed }: {  setIsCollaps
           className="flex items-center gap-2 font-bold text-primary"
         >
           <BsGlobe
-            className={`h-8 w-8 rotate-[15deg] ${isCollapsed ? "m-2" : ""}`}
+            className={`h-8 w-8 rotate-[15deg] ${isCollapsed ? "" : ""}`}
           />
-          <motion.div
-            layout
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}  
-            transition={{ delay: 0.125 }}
-            className={`text-lg flex gap-2 transition-opacity duration-300 ${
-              isCollapsed ? "hidden" : "block"
-            }`}
-          >
-            Reservas <p>App</p>
-          </motion.div>
+          {!isCollapsed && (
+              <motion.span
+                layout
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.125 }}
+                className={`text-xs font-medium ${isMobile ? "hidden" : ""}`}
+              >
+                Reservas <p>App</p>
+              </motion.span>
+            )}
         </Link>
       </div>
 

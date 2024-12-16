@@ -14,7 +14,7 @@ export default function Layout({ children }: LayoutProps) {
       {/* SideNav */}
       <div
         className={`${
-          isCollapsed ? "md:w-12" : "md:w-28"
+          isCollapsed ? "md:w-10" : "md:w-28"
         } w-full flex-none transition-all duration-300`}
       >
         <SideNav setIsCollapsed={setIsCollapsed} isCollapsed={isCollapsed} />

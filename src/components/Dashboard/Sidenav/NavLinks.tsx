@@ -34,13 +34,13 @@ export default function NavLinks({
           <Link
             key={link.name}
             href={link.href}
-            className={`relative flex h-full w-full items-center rounded-md transition-colors p-1 ${
+            className={`relative flex h-full w-full items-center rounded-md transition-colors p-1 gap-2 ${
               pathName === link.href
-                ? "bg-red-300 text-primary"
+                ? "bg-sky-100 text-primary"
                 : "text-gray-800 hover:bg-sky-100 hover:text-primary"
             }`}
           >
-            <LinkIcon className="h-full w-10 text-3xl font-bold text-primary " />
+            <LinkIcon className="h-full w-9 text-3xl font-bold text-primary " />
             {!isCollapsed && (
               <motion.span
                 layout

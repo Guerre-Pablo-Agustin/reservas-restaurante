@@ -7,7 +7,7 @@ type Props = {
 
 const Searcher = ({search, setSearch}: Props) => {
   return (
-    <div className=" mb-4 w-full">
+    <div className="w-full">
     <input
       type="text"
       value={search}

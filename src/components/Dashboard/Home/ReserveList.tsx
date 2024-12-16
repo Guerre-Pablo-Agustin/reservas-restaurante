@@ -6,9 +6,17 @@ import { useEffect, useState } from "react";
 import Searcher from "./Searcher";
 import Paginated from "./Paginated";
 import { useStore } from "@/store/store";
+import { Reservation } from "@/types/types";
+import Create from "./Create";
 
 const ReserveList = () => {
-  const { reservations, deleteReservation, loadReservations } = useStore();
+  const {
+    reservations,
+    deleteReservation,
+    loadReservations,
+    createReservation,
+    setReservations,
+  } = useStore();
 
   //busqueda
   const [search, setSearch] = useState("");
@@ -18,7 +26,7 @@ const ReserveList = () => {
       r.clientName.toLowerCase().includes(search.toLowerCase()) ||
       r.date.toLowerCase().includes(search.toLowerCase()) ||
       r.status.toLowerCase().includes(search.toLowerCase()) ||
-      r.quantity.toString().includes(search.toLowerCase())
+      r.quantity.toString().includes(search.toLowerCase()),
   );
 
   //paginado
@@ -29,10 +37,8 @@ const ReserveList = () => {
   const startIndex = (currentPage - 1) * itemsPerPage;
   const currentReservations = filteredReservations.slice(
     startIndex,
-    startIndex + itemsPerPage
+    startIndex + itemsPerPage,
   );
-
-
 
   //carga de datos
   useEffect(() => {
@@ -61,6 +67,7 @@ const ReserveList = () => {
     }
   };
 
+  //eliminar reserva
   const handleDelete = (id: number) => {
     Swal.fire({
       title: "¿Estás seguro?",
@@ -83,64 +90,118 @@ const ReserveList = () => {
     });
   };
 
+  //crear reserva
+  const [showForm, setShowForm] = useState(false);
+  const [newReservation, setNewReservation] = useState<Reservation>({
+    id: 0,
+    clientName: "",
+    date: "",
+    time: "",
+    status: "pending",
+    quantity: 1,
+    details: "",
+  });
+
+  const handleAddTask = () => {
+    if (
+      !newReservation.clientName ||
+      !newReservation.date ||
+      !newReservation.time ||
+      !newReservation.quantity ||
+      !newReservation.details ||
+      !newReservation.status
+    ) {
+      Swal.fire({
+        title: "Error",
+        text: "Por favor, rellena todos los campos.",
+        icon: "error",
+        confirmButtonText: "Aceptar",
+      });
+      return;
+    }
+    const data = {
+      id: Date.now(),
+      clientName: newReservation.clientName,
+      details: newReservation.details,
+      status: newReservation.status as "pending" | "confirmed" | "canceled",
+      date: newReservation.date,
+      time: newReservation.time,
+      quantity: newReservation.quantity,
+    };
+    createReservation(data);
+    setReservations([...reservations, data]);
+    Swal.fire({
+      title: "¡Reserva creada!",
+      text: "La reserva ha sido creada con éxito.",
+      icon: "success",
+      confirmButtonText: "Aceptar",
+    });
+    setNewReservation({
+      id: 0,
+      clientName: "",
+      date: "",
+      time: "",
+      status: "pending",
+      quantity: 1,
+      details: "",
+    });
+    setShowForm(false);
+  };
+
   return (
     <section>
-      <div className="text-2xl text-center font-bold mb-4">
-        Lista de tareas
-      </div>
+      <div className="mb-4 text-center text-2xl font-bold">Lista de tareas</div>
 
       {/* Buscador */}
-      <div className="w-full justify-between flex items-center m-6 gap-2 py-4 px-8">
+      <div className="mx-auto flex w-full max-w-screen-lg items-center gap-4 rounded-md px-6 py-4">
         <Searcher search={search} setSearch={setSearch} />
-        <button className=" bg-primary hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow-md shadow-primary/50 w-[20%]">
+        <button
+          onClick={() => setShowForm(true)}
+          data-modal-toggle="create-modal"
+          className="flex-shrink-0 rounded bg-primary px-4 py-2 font-bold text-white shadow-md shadow-primary/50 hover:bg-blue-700"
+        >
           Crear +
         </button>
       </div>
 
+      <br />
+
       {/* Tabla de tareas */}
-      <div className="overflow-x-auto">
+      <div className="mt-2 overflow-x-auto">
         <table className="w-full table-auto">
-          <thead className="text-gray-700 text-sm font-medium uppercase">
+          <thead className="text-sm font-medium uppercase text-gray-700">
             <tr>
               <th>#</th>
-              <th>
-                Cliente
-              </th>
-              <th>
-                Cantidad
-              </th>
+              <th>Cliente</th>
+              <th>Cantidad</th>
               <th>Fecha</th>
-              <th>
-                Estado
-              </th>
-              <th>
-                Acciones
-              </th>
+              <th>Hora</th>
+              <th>Estado</th>
+              <th>Acciones</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-300">
             {currentReservations.map((r) => (
-              <tr key={r.id}>
-                <td className="text-sm text-center p-2">{r.id}</td>
-                <td className="text-sm text-start p-2">{r.clientName}</td>
-                <td className="text-sm text-start p-2">{r.quantity}</td>
-                <td className="text-sm text-center p-2">
+              <tr key={r.id} className="even:bg-gray-100">
+                <td className="p-2 text-center text-sm">{r.id}</td>
+                <td className="p-2 text-center text-sm">{r.clientName}</td>
+                <td className="p-2 text-center text-sm">{r.quantity}</td>
+                <td className="p-2 text-center text-sm">
                   {formatDate(r.date)}
                 </td>
-                <td className={`text-sm text-center rounded`}>
-                  <p className={`${getStatus(r.status)} py-0.5 px-2 rounded`}>
+                <td className="p-2 text-center text-sm">{r.time}</td>
+                <td className={`rounded text-center text-sm`}>
+                  <p className={`${getStatus(r.status)} rounded px-2 py-1`}>
                     {r.status.toUpperCase()}
                   </p>
                 </td>
-                <td className="text-sm text-center flex gap-2 items-center justify-center p-2">
-                  <Link href={`/panel/edit/${r.id}`}>
-                    <button className="bg-edit hover:bg-edit/70 text-white font-bold py-2 px-4 rounded shadow-md shadow-edit/50">
-                    Editar
-                    </button>
-                  </Link>
+                <td className="flex items-center justify-center gap-2 p-2 text-center text-sm">
+                  <button className="rounded bg-info px-4 py-2 font-bold text-white shadow-md shadow-info/50 hover:bg-info/70">
+                    Detalles
+                  </button>
                   <button
                     onClick={() => handleDelete(r.id)}
-                    className="bg-delete hover:bg-delete text-white font-bold py-2 px-4 rounded shadow-md shadow-delete/50"
+                    className="rounded bg-delete px-4 py-2 font-bold text-white shadow-md shadow-delete/50 hover:bg-delete"
                   >
                     Eliminar
                   </button>
@@ -151,8 +212,18 @@ const ReserveList = () => {
         </table>
       </div>
 
+      {/* Formulario de creación de reserva */}
+      {showForm && (
+        <Create
+          onClose={() => setShowForm(false)}
+          onAddReservation={handleAddTask}
+          newReservation={newReservation}
+          setNewReservation={setNewReservation}
+        />
+      )}
+
       {/* Paginación */}
-      <div className="flex justify-center items-center mt-4 gap-2">
+      <div className="mt-4 flex items-center justify-center gap-2">
         <Paginated
           currentPage={currentPage}
           totalPages={totalPages}

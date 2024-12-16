@@ -99,49 +99,20 @@ export const useStore = create<Store>((set) => ({
     }
   },
   createReservation: (reservation) => {
-    set(() => {
-      const existingReservations = JSON.parse(
-        localStorage.getItem("reservations") || "[]",
-      );
-      const allReservations = [...data.reservations, ...existingReservations];
-
-      const reservationExists = allReservations.some(
-        (reservation: Reservation) => reservation.id === reservation.id,
-      );
-
-      if (reservationExists) {
-        throw new Error("La reserva ya existe con este id.");
-      }
-
-      const updatedReservations = [...existingReservations, reservation];
-      localStorage.setItem("reservations", JSON.stringify(updatedReservations));
-
-      return {};
+    set((state) => {
+      const updateRerservation = [...state.reservations, reservation];
+      localStorage.setItem("reservations", JSON.stringify(updateRerservation));
+      return { reservations: updateRerservation };
     });
   },
 
+
+
   deleteReservation: (id) => {
-    set(() => {
-      const existingReservations = JSON.parse(
-        localStorage.getItem("reservations") || "[]",
-      );
-      const allReservations = [...data.reservations, ...existingReservations];
-
-      const reservationIndex = allReservations.findIndex(
-        (reservation: Reservation) => reservation.id === id,
-      );
-
-      if (reservationIndex === -1) {
-        throw new Error("La reserva no existe.");
-      }
-
-      const updatedReservations = [
-        ...existingReservations.slice(0, reservationIndex),
-        ...existingReservations.slice(reservationIndex + 1),
-      ];
+    set((state) => {
+      const updatedReservations = state.reservations.filter((todo) => todo.id !== id);
       localStorage.setItem("reservations", JSON.stringify(updatedReservations));
-
-      return {};
+      return { reservations: updatedReservations };
     });
   },
   updateReservation: (id, updateReservation) => {

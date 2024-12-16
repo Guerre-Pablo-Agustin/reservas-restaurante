@@ -23,7 +23,7 @@ export const data : {
             id: 1,
             clientName: "Juan Perez",
             date: "2025-01-01",
-            time: "10:00",
+            time: "9:00",
             status: "canceled",
             quantity: 2,
             details: "Detalles de la reserva"
@@ -42,7 +42,7 @@ export const data : {
             id: 3,
             clientName: "Luis sanchez",
             date: "2025-01-03",
-            time: "10:00",
+            time: "17:00",
             status: "pending",
             quantity: 8,
             details: "Detalles de la reserva"

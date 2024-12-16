@@ -59,13 +59,17 @@ export default function SideNav({ setIsCollapsed, isCollapsed }: {  setIsCollaps
           <BsGlobe
             className={`h-8 w-8 rotate-[15deg] ${isCollapsed ? "m-2" : ""}`}
           />
-          <span
+          <motion.div
+            layout
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}  
+            transition={{ delay: 0.125 }}
             className={`text-lg flex gap-2 transition-opacity duration-300 ${
               isCollapsed ? "hidden" : "block"
             }`}
           >
             Reservas <p>App</p>
-          </span>
+          </motion.div>
         </Link>
       </div>
 

@@ -26,7 +26,7 @@ export default function NavLinks({
       initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.125 }}
-      className="flex w-[60%] justify-between gap-2 px-4 md:w-full md:flex-col"
+      className="flex w-[60%] justify-between gap-2 px-2 md:w-full md:flex-col"
     >
       {Links.map((link) => {
         const LinkIcon = link.icon;
@@ -34,20 +34,20 @@ export default function NavLinks({
           <Link
             key={link.name}
             href={link.href}
-            className={`flex items-start gap-2 rounded-md p-8 text-sm font-medium transition-all duration-300 md:p-3 ${
+            className={`relative flex h-full w-full items-center rounded-md transition-colors p-1 ${
               pathName === link.href
                 ? "bg-sky-100 text-primary"
                 : "bg-gray-50 text-gray-800 hover:bg-sky-100 hover:text-primary"
             }`}
           >
-            <LinkIcon className="h-6 w-6 text-3xl font-bold text-primary" />
+            <LinkIcon className="h-full w-10 text-3xl font-bold text-primary " />
             {!isCollapsed && (
               <motion.span
                 layout
                 initial={{ opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.125 }}
-                className={`text-xs font-medium ${isMobile ? "hidden" : ""}`}
+                className={`text-xs font-medium text-center justify-start ${isMobile ? "hidden" : ""}`}
               >
                 {link.name}
               </motion.span>

@@ -1,12 +1,10 @@
 "use client";
 
-import Link from "next/link";
 import Swal from "sweetalert2";
 import { useEffect, useState } from "react";
 import Searcher from "./Searcher";
 import Paginated from "./Paginated";
 import { useStore } from "@/store/store";
-import { Reservation } from "@/types/types";
 import Create from "./Create";
 
 const ReserveList = () => {
@@ -14,8 +12,6 @@ const ReserveList = () => {
     reservations,
     deleteReservation,
     loadReservations,
-    createReservation,
-    setReservations,
   } = useStore();
 
   //busqueda
@@ -92,61 +88,6 @@ const ReserveList = () => {
 
   //crear reserva
   const [showForm, setShowForm] = useState(false);
-  const [newReservation, setNewReservation] = useState<Reservation>({
-    id: 0,
-    clientName: "",
-    date: "",
-    time: "",
-    status: "pending",
-    quantity: 1,
-    details: "",
-  });
-
-  const handleAddTask = () => {
-    if (
-      !newReservation.clientName ||
-      !newReservation.date ||
-      !newReservation.time ||
-      !newReservation.quantity ||
-      !newReservation.details ||
-      !newReservation.status
-    ) {
-      Swal.fire({
-        title: "Error",
-        text: "Por favor, rellena todos los campos.",
-        icon: "error",
-        confirmButtonText: "Aceptar",
-      });
-      return;
-    }
-    const data = {
-      id: Date.now(),
-      clientName: newReservation.clientName,
-      details: newReservation.details,
-      status: newReservation.status as "pending" | "confirmed" | "canceled",
-      date: newReservation.date,
-      time: newReservation.time,
-      quantity: newReservation.quantity,
-    };
-    createReservation(data);
-    setReservations([...reservations, data]);
-    Swal.fire({
-      title: "¡Reserva creada!",
-      text: "La reserva ha sido creada con éxito.",
-      icon: "success",
-      confirmButtonText: "Aceptar",
-    });
-    setNewReservation({
-      id: 0,
-      clientName: "",
-      date: "",
-      time: "",
-      status: "pending",
-      quantity: 1,
-      details: "",
-    });
-    setShowForm(false);
-  };
 
   return (
     <section>
@@ -215,10 +156,8 @@ const ReserveList = () => {
       {/* Formulario de creación de reserva */}
       {showForm && (
         <Create
+          setShowForm={setShowForm}
           onClose={() => setShowForm(false)}
-          onAddReservation={handleAddTask}
-          newReservation={newReservation}
-          setNewReservation={setNewReservation}
         />
       )}
 

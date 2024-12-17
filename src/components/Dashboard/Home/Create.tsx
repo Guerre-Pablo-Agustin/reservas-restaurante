@@ -1,30 +1,63 @@
 import { Reservation } from "@/types/types";
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
+import Swal from "sweetalert2";
+import { useStore } from "@/store/store";
 
 type Props = {
   onClose: () => void;
-  onAddReservation: (reservations: Reservation) => void;
-  newReservation: Reservation;
-  setNewReservation: React.Dispatch<React.SetStateAction<Reservation>>;
+  setShowForm: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const Create = ({
-  onClose,
-  onAddReservation,
-  newReservation,
-  setNewReservation,
-}: Props) => {
-  const handleNewReservationChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >,
-  ) => {
-    setNewReservation({ ...newReservation, [e.target.name]: e.target.value });
-  };
+  onClose, setShowForm }: Props) => {
 
-  const handleAddReservation = () => {
-    onAddReservation(newReservation);
+    const { reservations, createReservation, setReservations } = useStore();
+
+  const [newReservation, setNewReservation] = useState<Reservation>({
+    id: 0,
+    clientName: "",
+    date: "",
+    time: "",
+    status: "pending",
+    quantity: 1,
+    details: "",
+  });
+
+  const handleAddTask = () => {
+    if (
+      !newReservation.clientName ||
+      !newReservation.date ||
+      !newReservation.time ||
+      !newReservation.quantity ||
+      !newReservation.details ||
+      !newReservation.status
+    ) {
+      Swal.fire({
+        title: "Error",
+        text: "Por favor, rellena todos los campos.",
+        icon: "error",
+        confirmButtonText: "Aceptar",
+      });
+      return;
+    }
+    const data = {
+      id: Date.now(),
+      clientName: newReservation.clientName,
+      details: newReservation.details,
+      status: newReservation.status as "pending" | "confirmed" | "canceled",
+      date: newReservation.date,
+      time: newReservation.time,
+      quantity: newReservation.quantity,
+    };
+    createReservation(data);
+    setReservations([...reservations, data]);
+    Swal.fire({
+      title: "¡Reserva creada!",
+      text: "La reserva ha sido creada con éxito.",
+      icon: "success",
+      confirmButtonText: "Aceptar",
+    });
     setNewReservation({
       id: 0,
       clientName: "",
@@ -34,7 +67,18 @@ const Create = ({
       quantity: 1,
       details: "",
     });
+    setShowForm(false);
   };
+
+
+  const handleNewReservationChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >,
+  ) => {setNewReservation({ ...newReservation, [e.target.name]: e.target.value });
+  };
+
+ 
 
   return (
     <motion.div
@@ -42,10 +86,10 @@ const Create = ({
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.125 }}
       id="create-modal"
-      className="fixed top-5 z-50  w-[75%] items-center justify-center bg-white p-4 rounded-md border-2 border-gray-300 shadow-md font-serif"
+      className="fixed top-24 md:top-5 z-50 w-[89%] md:w-[75%] items-center justify-center bg-white p-4 rounded-md border-2 border-gray-300 shadow-md font-serif"
     >
         <p className="text-center text-2xl font-bold ">Crear reserva</p>
-      <div className="flex flex-col gap-4 p-4">
+      <div className="flex flex-col gap-10 p-4">
         <div className="flex flex-col gap-2">
           <label
             htmlFor="clientName"
@@ -62,7 +106,7 @@ const Create = ({
             placeholder="Nombre del cliente"
           />
         </div>
-        <div className="flex flex-row gap-2">
+        <div className="flex flex-row gap-16">
           <div className="flex flex-col gap-2">
             <label htmlFor="date" className="text-sm font-medium text-gray-800">
               Fecha
@@ -76,6 +120,7 @@ const Create = ({
               placeholder="Fecha"
             />
           </div>
+          
           <div className="flex flex-col gap-2">
             <label htmlFor="time" className="text-sm font-medium text-gray-800">
               Hora
@@ -90,7 +135,7 @@ const Create = ({
             />
           </div>
         </div>
-        <div className="flex flex-row gap-2">
+        <div className="flex flex-row gap-16">
           <div className="flex flex-col gap-2">
             <label
               htmlFor="quantity"
@@ -153,7 +198,7 @@ const Create = ({
 
       <div className="flex justify-end gap-2 p-4">
         <button
-          onClick={handleAddReservation}
+          onClick={handleAddTask}
           className="rounded bg-primary px-4 py-2 font-bold text-white shadow-md shadow-primary/50 hover:bg-blue-700"
         >
           Crear

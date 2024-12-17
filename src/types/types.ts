@@ -13,7 +13,7 @@ export type Reservation = {
   clientName: string;
   date: string;
   time: string;
-  status: "pending" | "confirmed" | "canceled";
+  status: "pendiente" | "confirmada" | "cancelada";
   quantity: number;
   details: string;
 

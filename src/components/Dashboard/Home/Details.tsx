@@ -37,7 +37,7 @@ const Details = ({ setShowDetails, selectId }: Props) => {
       id: selectedReservation?.id || 0,
       clientName: editableReservation.clientName,
       details: editableReservation.details,
-      status: editableReservation.status as "pending" | "confirmed" | "canceled",
+      status: editableReservation.status as "pendiente" | "confirmada" | "cancelada",
       date: editableReservation.date,
       time: editableReservation.time,
       quantity: editableReservation.quantity,
@@ -124,9 +124,9 @@ const Details = ({ setShowDetails, selectId }: Props) => {
               onChange={handleChange}
               className="w-full rounded-md border-gray-300 p-2 text-sm text-gray-800"
             >
-              <option value="pending">Pendiente</option>
-              <option value="confirmed">Confirmada</option>
-              <option value="canceled">Cancelada</option>
+              <option value="pendiente">Pendiente</option>
+              <option value="confirmada">Confirmada</option>
+              <option value="cancelada">Cancelada</option>
             </select>
           </div>
         </div>

@@ -19,7 +19,7 @@ const Create = ({
     clientName: "",
     date: "",
     time: "",
-    status: "pending",
+    status: "pendiente",
     quantity: 1,
     details: "",
   });
@@ -45,7 +45,7 @@ const Create = ({
       id: Date.now(),
       clientName: newReservation.clientName,
       details: newReservation.details,
-      status: newReservation.status as "pending" | "confirmed" | "canceled",
+      status: newReservation.status as "pendiente" | "confirmada" | "cancelada",
       date: newReservation.date,
       time: newReservation.time,
       quantity: newReservation.quantity,
@@ -63,7 +63,7 @@ const Create = ({
       clientName: "",
       date: "",
       time: "",
-      status: "pending",
+      status: "pendiente",
       quantity: 1,
       details: "",
     });
@@ -167,15 +167,15 @@ const Create = ({
                 setNewReservation((prev) => ({
                   ...prev,
                   status: e.target.value as
-                    | "pending"
-                    | "confirmed"
-                    | "canceled",
+                    | "pendiente"
+                    | "confirmada"
+                    | "cancelada",
                 }))
               }
             >
-              <option value="pending">Pendiente</option>
-              <option value="confirmed">Confirmada</option>
-              <option value="canceled">Cancelada</option>
+              <option value="pendiente">Pendiente</option>
+              <option value="confirmada">Confirmada</option>
+              <option value="cancelada">Cancelada</option>
             </select>
           </div>
         </div>

@@ -24,7 +24,7 @@ export const data : {
             clientName: "Juan Perez",
             date: "2025-01-01",
             time: "9:00",
-            status: "canceled",
+            status: "pendiente",
             quantity: 2,
             details: "Detalles de la reserva"
         },
@@ -33,7 +33,7 @@ export const data : {
             clientName: "Maria Díaz",
             date: "2025-01-02",
             time: "10:00",
-            status: "confirmed",
+            status: "confirmada",
             quantity: 6,
             details: "Detalles de la reserva"
 
@@ -43,7 +43,7 @@ export const data : {
             clientName: "Luis sanchez",
             date: "2025-01-03",
             time: "17:00",
-            status: "pending",
+            status: "cancelada",
             quantity: 8,
             details: "Detalles de la reserva"
         }

@@ -53,11 +53,11 @@ const ReserveList = () => {
 
   const getStatus = (status: string) => {
     switch (status) {
-      case "pending":
+      case "pendiente":
         return "bg-green-500 text-white shadow-md shadow-green-500/50";
-      case "confirmed":
+      case "confirmada":
         return "bg-yellow-500 text-white shadow-md shadow-yellow-500/50";
-      case "canceled":
+      case "cancelada":
         return "bg-violet-500 text-white shadow-md shadow-violet-500/50";
       default:
         return "bg-gray-500 text-white shadow-md shadow-gray-500/50";

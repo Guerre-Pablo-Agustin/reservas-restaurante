@@ -6,6 +6,7 @@ import Searcher from "./Searcher";
 import Paginated from "./Paginated";
 import { useStore } from "@/store/store";
 import Create from "./Create";
+import Details from "./Details";
 
 const ReserveList = () => {
   const {
@@ -89,6 +90,10 @@ const ReserveList = () => {
   //crear reserva
   const [showForm, setShowForm] = useState(false);
 
+  //ver detalles
+  const [showDetails, setShowDetails] = useState(false);
+  const [selectId, setSelectId] = useState<number>(0);
+
   return (
     <section>
       <div className="mb-4 text-center text-2xl font-bold">Lista de tareas</div>
@@ -137,7 +142,13 @@ const ReserveList = () => {
                   </p>
                 </td>
                 <td className="flex items-center justify-center gap-2 p-2 text-center text-sm">
-                  <button className="rounded bg-info px-4 py-2 font-bold text-white shadow-md shadow-info/50 hover:bg-info/70">
+                  <button
+                   
+                   onClick={() => {
+                    setSelectId(r.id); // Guarda el ID seleccionado
+                    setShowDetails(true); // Muestra el componente Details
+                  }}
+                  className="rounded bg-info px-4 py-2 font-bold text-white shadow-md shadow-info/50 hover:bg-info/70">
                     Detalles
                   </button>
                   <button
@@ -160,6 +171,12 @@ const ReserveList = () => {
           onClose={() => setShowForm(false)}
         />
       )}
+
+      {/* Detalles de reserva */}
+      {showDetails && 
+      <Details 
+      selectId={selectId}
+      setShowDetails={setShowDetails}/>}
 
       {/* Paginación */}
       <div className="mt-4 flex items-center justify-center gap-2">

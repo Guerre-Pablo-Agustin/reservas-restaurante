@@ -114,17 +114,18 @@ const ReserveList = () => {
       {/* Tabla de tareas */}
       <div className="mt-2 overflow-x-auto">
         <table className="w-full table-auto">
-          <thead className="text-sm font-medium uppercase text-gray-700">
-            <tr>
-              <th>#</th>
-              <th>Cliente</th>
-              <th>Cantidad</th>
-              <th>Fecha</th>
-              <th>Hora</th>
-              <th>Estado</th>
-              <th>Acciones</th>
+          <thead className="bg-gray-400 text-white text-sm font-medium uppercase">
+            <tr className="border-b border-gray-300">
+              <th className="p-3 text-left rounded-l-lg">#</th>
+              <th className="p-3 text-left">Cliente</th>
+              <th className="p-3 text-center">Cantidad</th>
+              <th className="p-3 text-center">Fecha</th>
+              <th className="p-3 text-center">Hora</th>
+              <th className="p-3 text-center">Estado</th>
+              <th className="p-3 text-center rounded-r-lg">Acciones</th>
             </tr>
           </thead>
+
           <tbody className="divide-y divide-gray-300">
             {currentReservations.map((r) => (
               <tr key={r.id} className="even:bg-gray-100">
@@ -136,7 +137,9 @@ const ReserveList = () => {
                 </td>
                 <td className="p-2 text-center text-sm">{r.time}</td>
                 <td className={`text-center text-sm`}>
-                  <p className={`${getStatus(r.status)} rounded-full p-1 lg:w-[60%] mx-auto text-center`}>
+                  <p
+                    className={`${getStatus(r.status)} mx-auto rounded-full p-1 text-center lg:w-[60%]`}
+                  >
                     {r.status.toUpperCase()}
                   </p>
                 </td>
@@ -150,17 +153,25 @@ const ReserveList = () => {
                   >
                     <CiEdit className="buton-editar text-2xl text-info" />
                   </button>
-                  <Tooltip anchorSelect=".buton-editar" place="top" style={{backgroundColor:"#a3bffa", borderRadius:"50%"}}>
-                     Editar
-                   </Tooltip>
+                  <Tooltip
+                    anchorSelect=".buton-editar"
+                    place="top"
+                    style={{ backgroundColor: "#a3bffa", borderRadius: "50%" }}
+                  >
+                    Editar
+                  </Tooltip>
                   <button
                     data-tip="Eliminar"
                     onClick={() => handleDelete(r.id)}
                   >
                     <RiDeleteBin5Line className="buton-eliminar text-2xl text-red-500" />
                   </button>
-                  <Tooltip anchorSelect=".buton-eliminar" place="top" style={{backgroundColor:"#ef4444", borderRadius:"50%"}}>
-                   Eliminar
+                  <Tooltip
+                    anchorSelect=".buton-eliminar"
+                    place="top"
+                    style={{ backgroundColor: "#ef4444", borderRadius: "50%" }}
+                  >
+                    Eliminar
                   </Tooltip>
                 </td>
               </tr>

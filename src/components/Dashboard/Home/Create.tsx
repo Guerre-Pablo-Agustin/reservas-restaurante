@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import Swal from "sweetalert2";
 import { useStore } from "@/store/store";
+import { AiOutlinePlusCircle } from "react-icons/ai";
 
 type Props = {
   onClose: () => void;
@@ -203,7 +204,7 @@ const Create = ({
           onClick={handleAddTask}
           className="rounded bg-primary px-4 py-2 font-bold text-white shadow-md shadow-primary/50 hover:bg-blue-700"
         >
-          Crear
+          <AiOutlinePlusCircle className="buton-crear text-2xl text-info" />
         </button>
         <button
           onClick={onClose}

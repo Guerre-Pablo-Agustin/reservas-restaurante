@@ -7,6 +7,8 @@ import Paginated from "./Paginated";
 import { useStore } from "@/store/store";
 import Create from "./Create";
 import Details from "./Details";
+import { RiDeleteBin5Line } from "react-icons/ri";
+import { CiEdit } from "react-icons/ci";
 
 const ReserveList = () => {
   const {
@@ -54,11 +56,11 @@ const ReserveList = () => {
   const getStatus = (status: string) => {
     switch (status) {
       case "pendiente":
-        return "bg-green-500 text-white shadow-md shadow-green-500/50";
+        return "bg-yellow-500 text-yellow-300 shadow-md shadow-yellow-500/50";
       case "confirmada":
-        return "bg-yellow-500 text-white shadow-md shadow-yellow-500/50";
+        return "bg-green-500 text-green-300 shadow-md shadow-green-500/50";
       case "cancelada":
-        return "bg-violet-500 text-white shadow-md shadow-violet-500/50";
+        return "bg-red-500 text-red-300 shadow-md shadow-red-500/50";
       default:
         return "bg-gray-500 text-white shadow-md shadow-gray-500/50";
     }
@@ -136,8 +138,8 @@ const ReserveList = () => {
                   {formatDate(r.date)}
                 </td>
                 <td className="p-2 text-center text-sm">{r.time}</td>
-                <td className={`rounded text-center text-sm`}>
-                  <p className={`${getStatus(r.status)} rounded px-2 py-1`}>
+                <td className={` text-center text-sm`}>
+                  <p className={`${getStatus(r.status)} rounded-full p-1`}>
                     {r.status.toUpperCase()}
                   </p>
                 </td>
@@ -147,15 +149,13 @@ const ReserveList = () => {
                    onClick={() => {
                     setSelectId(r.id); // Guarda el ID seleccionado
                     setShowDetails(true); // Muestra el componente Details
-                  }}
-                  className="rounded bg-info px-4 py-2 font-bold text-white shadow-md shadow-info/50 hover:bg-info/70">
-                    Detalles
+                  }}>
+                   <CiEdit className="text-2xl text-info" />
                   </button>
                   <button
                     onClick={() => handleDelete(r.id)}
-                    className="rounded bg-delete px-4 py-2 font-bold text-white shadow-md shadow-delete/50 hover:bg-delete"
                   >
-                    Eliminar
+                    <RiDeleteBin5Line className="text-2xl text-red-500" />
                   </button>
                 </td>
               </tr>

@@ -107,6 +107,8 @@ const Details = ({ setShowDetails, selectId }: Props) => {
             <input
               type="number"
               name="quantity"
+              min={1}
+              max={10}
               value={editableReservation.quantity || ''}
               onChange={handleChange}
               className="w-full rounded-md border-gray-300 p-2 text-sm text-gray-800"

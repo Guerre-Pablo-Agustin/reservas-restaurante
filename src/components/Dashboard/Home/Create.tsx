@@ -146,6 +146,8 @@ const Create = ({
             <input
               type="number"
               name="quantity"
+              min={1}
+              max={10}
               value={newReservation.quantity}
               onChange={handleNewReservationChange}
               className="w-full rounded-md border-gray-300 p-2 text-sm text-gray-800"

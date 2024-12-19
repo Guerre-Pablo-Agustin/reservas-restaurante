@@ -9,13 +9,10 @@ import Create from "./Create";
 import Details from "./Details";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { CiEdit } from "react-icons/ci";
+import { Tooltip } from "react-tooltip";
 
 const ReserveList = () => {
-  const {
-    reservations,
-    deleteReservation,
-    loadReservations,
-  } = useStore();
+  const { reservations, deleteReservation, loadReservations } = useStore();
 
   //busqueda
   const [search, setSearch] = useState("");
@@ -138,25 +135,33 @@ const ReserveList = () => {
                   {formatDate(r.date)}
                 </td>
                 <td className="p-2 text-center text-sm">{r.time}</td>
-                <td className={` text-center text-sm`}>
-                  <p className={`${getStatus(r.status)} rounded-full p-1`}>
+                <td className={`text-center text-sm`}>
+                  <p className={`${getStatus(r.status)} rounded-full p-1 lg:w-[60%] mx-auto text-center`}>
                     {r.status.toUpperCase()}
                   </p>
                 </td>
                 <td className="flex items-center justify-center gap-2 p-2 text-center text-sm">
                   <button
-                   
-                   onClick={() => {
-                    setSelectId(r.id); // Guarda el ID seleccionado
-                    setShowDetails(true); // Muestra el componente Details
-                  }}>
-                   <CiEdit className="text-2xl text-info" />
+                    data-tip="Editar"
+                    onClick={() => {
+                      setSelectId(r.id); // Guarda el ID seleccionado
+                      setShowDetails(true); // Muestra el componente Details
+                    }}
+                  >
+                    <CiEdit className="buton-editar text-2xl text-info" />
                   </button>
+                  <Tooltip anchorSelect=".buton-editar" place="top" style={{backgroundColor:"#a3bffa", borderRadius:"50%"}}>
+                     Editar
+                   </Tooltip>
                   <button
+                    data-tip="Eliminar"
                     onClick={() => handleDelete(r.id)}
                   >
-                    <RiDeleteBin5Line className="text-2xl text-red-500" />
+                    <RiDeleteBin5Line className="buton-eliminar text-2xl text-red-500" />
                   </button>
+                  <Tooltip anchorSelect=".buton-eliminar" place="top" style={{backgroundColor:"#ef4444", borderRadius:"50%"}}>
+                   Eliminar
+                  </Tooltip>
                 </td>
               </tr>
             ))}
@@ -166,17 +171,13 @@ const ReserveList = () => {
 
       {/* Formulario de creación de reserva */}
       {showForm && (
-        <Create
-          setShowForm={setShowForm}
-          onClose={() => setShowForm(false)}
-        />
+        <Create setShowForm={setShowForm} onClose={() => setShowForm(false)} />
       )}
 
       {/* Detalles de reserva */}
-      {showDetails && 
-      <Details 
-      selectId={selectId}
-      setShowDetails={setShowDetails}/>}
+      {showDetails && (
+        <Details selectId={selectId} setShowDetails={setShowDetails} />
+      )}
 
       {/* Paginación */}
       <div className="mt-4 flex items-center justify-center gap-2">

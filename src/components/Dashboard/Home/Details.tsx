@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useStore } from '@/store/store';
 import { Reservation } from '@/types/types';
 import Swal from 'sweetalert2';
+import { motion } from 'framer-motion';
+import { CiEdit } from 'react-icons/ci';
 
 type Props = {
   setShowDetails: React.Dispatch<React.SetStateAction<boolean>>;
@@ -53,7 +55,12 @@ const Details = ({ setShowDetails, selectId }: Props) => {
   };
 
   return (
-    <div className="fixed top-24 md:top-5 z-50 w-[89%] px-4 md:w-[65%] items-center justify-center bg-white p-4 rounded-md border-2 border-gray-300 shadow-md font-serif">
+    <motion.div
+    initial={{ opacity: 0, y: 12 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.125 }}
+      id="create-modal"
+     className="fixed top-24 md:top-5 z-50 w-[89%] px-4 md:w-[65%] items-center justify-center bg-white p-4 rounded-md border-2 border-gray-300 shadow-md font-serif">
       <p className="text-center text-2xl font-bold">Detalles de la reserva</p>
 
       <div className="flex flex-col gap-10 p-4">
@@ -148,15 +155,17 @@ const Details = ({ setShowDetails, selectId }: Props) => {
       </div>
 
       <div className="flex justify-end gap-4">
-        <button onClick={handlerEditReservation} className="rounded bg-primary px-4 py-2 font-bold text-white shadow-md shadow-primary/50 hover:bg-blue-700">Editar</button>
+        <button onClick={handlerEditReservation} className="rounded-full bg-primary px-4 py-2 font-bold text-white shadow-md shadow-primary/50 hover:bg-blue-700">
+        <CiEdit className="buton-editar text-2xl text-info" />
+        </button>
         <button
           onClick={() => setShowDetails(false)}
-          className="rounded bg-red-500 px-4 py-2 font-bold text-white shadow-md shadow-red-500/50 hover:bg-red-700"
+          className="rounded-full bg-red-500 px-4 py-2 font-bold text-white shadow-md shadow-red-500/50 hover:bg-red-700 "
         >
           Cerrar
         </button>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

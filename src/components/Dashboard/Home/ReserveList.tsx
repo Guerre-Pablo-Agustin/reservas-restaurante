@@ -41,14 +41,7 @@ const ReserveList = () => {
     loadReservations();
   }, [loadReservations]);
 
-  //fecha
-  const formatDate = (date: string) => {
-    const formatedDate = new Date(date);
-    const day = formatedDate.getDate().toString().padStart(2, "0");
-    const month = (formatedDate.getMonth() + 1).toString().padStart(2, "0");
-    const year = formatedDate.getFullYear().toString().slice(-2);
-    return `${day}/${month}/${year}`;
-  };
+ 
 
   const getStatus = (status: string) => {
     switch (status) {
@@ -93,6 +86,8 @@ const ReserveList = () => {
   const [showDetails, setShowDetails] = useState(false);
   const [selectId, setSelectId] = useState<string>("");
 
+  console.log("reservas", reservations);
+
   return (
     <section>
       <div className="mb-4 text-center text-2xl font-bold">Lista de reservas</div>
@@ -133,15 +128,19 @@ const ReserveList = () => {
                 <td className="p-2 text-center text-sm">{r.clientName}</td>
                 <td className="p-2 text-center text-sm">{r.quantity}</td>
                 <td className="p-2 text-center text-sm">
-                  {formatDate(r.date)}
-                </td>
-                <td className="p-2 text-center text-sm">
                 {new Date(r.date).toLocaleString(
                     "es-ES",
                     {
                       year: "numeric",
                       month: "short",
                       day: "2-digit",
+                    }
+                  )}
+                </td>
+                <td className="p-2 text-center text-sm">
+                {new Date(r.date).toLocaleString(
+                    "es-ES",
+                    {
                       hour: "2-digit",
                       minute: "2-digit",
                       hour12: true,

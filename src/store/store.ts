@@ -91,7 +91,7 @@ export const useStore = create<Store>((set) => ({
   },
 
   loadReservations: () => {
-    const reservation = localStorage.getItem("reservation");
+    const reservation = localStorage.getItem("reservations");
     if (reservation) {
       set({ reservations: JSON.parse(reservation) });
     } else {

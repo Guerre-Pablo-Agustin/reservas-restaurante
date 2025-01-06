@@ -1,9 +1,11 @@
+'use client'
 import { Reservation } from "@/types/types";
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import Swal from "sweetalert2";
 import { useStore } from "@/store/store";
 import { AiOutlinePlusCircle } from "react-icons/ai";
+import { v4 as uuidv4 } from "uuid";
 
 type Props = {
   onClose: () => void;
@@ -16,7 +18,7 @@ const Create = ({
     const { reservations, createReservation, setReservations } = useStore();
 
   const [newReservation, setNewReservation] = useState<Reservation>({
-    id: 0,
+    id: "",
     clientName: "",
     date: "",
     time: "",
@@ -43,7 +45,7 @@ const Create = ({
       return;
     }
     const data = {
-      id: Date.now(),
+      id: uuidv4(),
       clientName: newReservation.clientName,
       details: newReservation.details,
       status: newReservation.status as "pendiente" | "confirmada" | "cancelada",
@@ -60,7 +62,7 @@ const Create = ({
       confirmButtonText: "Aceptar",
     });
     setNewReservation({
-      id: 0,
+      id: "",
       clientName: "",
       date: "",
       time: "",

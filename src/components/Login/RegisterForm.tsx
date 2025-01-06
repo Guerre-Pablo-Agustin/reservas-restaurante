@@ -1,3 +1,4 @@
+'use client'
 import { useStore } from "@/store/store";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -6,6 +7,7 @@ import { BiArrowToRight, BiKey } from "react-icons/bi";
 import {  BsKey } from "react-icons/bs";
 import { RiEyeCloseLine, RiEyeLine } from "react-icons/ri";
 import Swal from "sweetalert2";
+import { v4 as uuidv4 } from "uuid";
 
 function RegisterForm() {
   //store
@@ -17,7 +19,7 @@ function RegisterForm() {
   //state
   const [showPassword, setShowPassword] = useState(false);
   const [userData, setUserData] = useState({
-    id: 0,
+    id: "",
     name: "",
     lastName: "",
     email: "",
@@ -39,7 +41,7 @@ function RegisterForm() {
 
     try {
       const newUser = {
-        id: Date.now(),
+        id: uuidv4(),
         email: userData.email,
         name: userData.name,
         lastName: userData.lastName,
@@ -57,7 +59,7 @@ function RegisterForm() {
       });
 
       setUserData({
-        id: 0,
+        id: "",
         email: "",
         name: "",
         lastName: "",

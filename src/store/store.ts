@@ -15,10 +15,10 @@ interface Store {
   reservations: Reservation[];
   setReservations: (reservations: Reservation[]) => void;
   createReservation: (reservation: Reservation) => void;
-  deleteReservation: (id: number) => void;
+  deleteReservation: (id: string) => void;
   loadReservations: () => void;
   updateReservation: (
-    id: number,
+    id: string,
     updateReservation: Partial<Reservation>,
   ) => void;
 }

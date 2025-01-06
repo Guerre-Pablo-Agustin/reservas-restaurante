@@ -1,5 +1,5 @@
 export type User = {
-  id: number;
+  id: string;
   name: string;
   lastName: string;
   email: string;
@@ -9,7 +9,7 @@ export type User = {
 
 
 export type Reservation = {
-  id: number;
+  id: string;
   clientName: string;
   date: string;
   time: string;

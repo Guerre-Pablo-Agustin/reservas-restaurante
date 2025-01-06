@@ -64,7 +64,7 @@ const ReserveList = () => {
   };
 
   //eliminar reserva
-  const handleDelete = (id: number) => {
+  const handleDelete = (id: string) => {
     Swal.fire({
       title: "¿Estás seguro?",
       text: "Deseas eliminar la reserva?",
@@ -91,11 +91,11 @@ const ReserveList = () => {
 
   //ver detalles
   const [showDetails, setShowDetails] = useState(false);
-  const [selectId, setSelectId] = useState<number>(0);
+  const [selectId, setSelectId] = useState<string>("");
 
   return (
     <section>
-      <div className="mb-4 text-center text-2xl font-bold">Lista de tareas</div>
+      <div className="mb-4 text-center text-2xl font-bold">Lista de reservas</div>
 
       {/* Buscador */}
       <div className="mx-auto flex w-full max-w-screen-lg items-center gap-4 rounded-md px-6 py-4">
@@ -135,10 +135,22 @@ const ReserveList = () => {
                 <td className="p-2 text-center text-sm">
                   {formatDate(r.date)}
                 </td>
-                <td className="p-2 text-center text-sm">{r.time}</td>
+                <td className="p-2 text-center text-sm">
+                {new Date(r.date).toLocaleString(
+                    "es-ES",
+                    {
+                      year: "numeric",
+                      month: "short",
+                      day: "2-digit",
+                      hour: "2-digit",
+                      minute: "2-digit",
+                      hour12: true,
+                    }
+                  )}
+                </td>
                 <td className={`text-center text-sm`}>
                   <p
-                    className={`${getStatus(r.status)} mx-auto rounded-full p-1 text-center lg:w-[60%]`}
+                    className={`${getStatus(r.status)} mx-auto rounded-full p-1 text-center lg:w-[80%]`}
                   >
                     {r.status.toUpperCase()}
                   </p>

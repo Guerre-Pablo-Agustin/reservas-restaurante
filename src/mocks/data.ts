@@ -8,7 +8,7 @@ export const data : {
     //**users
     users : [
         {
-            id: 1,
+            id: "1",
             name: "Juan",
             lastName: "Perez",
             email: "admin@gmail.com",
@@ -20,7 +20,7 @@ export const data : {
     //**reservations
     reservations : [
         {
-            id: 1,
+            id: "1",
             clientName: "Juan Perez",
             date: "2025-01-01",
             time: "9:00",
@@ -29,7 +29,7 @@ export const data : {
             details: "Detalles de la reserva"
         },
         {
-            id: 2,
+            id: "2",
             clientName: "Maria Díaz",
             date: "2025-01-02",
             time: "10:00",
@@ -39,7 +39,7 @@ export const data : {
 
         },
         {
-            id: 3,
+            id: "3",
             clientName: "Luis sanchez",
             date: "2025-01-03",
             time: "17:00",

@@ -1,3 +1,4 @@
+'use client'
 import React, { useState, useEffect } from 'react';
 import { useStore } from '@/store/store';
 import { Reservation } from '@/types/types';
@@ -7,7 +8,7 @@ import { CiEdit } from 'react-icons/ci';
 
 type Props = {
   setShowDetails: React.Dispatch<React.SetStateAction<boolean>>;
-  selectId: number;
+  selectId: string;
 };
 
 const Details = ({ setShowDetails, selectId }: Props) => {
@@ -36,7 +37,7 @@ const Details = ({ setShowDetails, selectId }: Props) => {
 
   const handlerEditReservation = () => {
     const data = {
-      id: selectedReservation?.id || 0,
+      id: selectedReservation?.id || "",
       clientName: editableReservation.clientName,
       details: editableReservation.details,
       status: editableReservation.status as "pendiente" | "confirmada" | "cancelada",

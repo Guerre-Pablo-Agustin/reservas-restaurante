@@ -1,7 +1,7 @@
 "use client";
 
 import Swal from "sweetalert2";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import Searcher from "./Searcher";
 import Paginated from "./Paginated";
 import { useStore } from "@/store/store";
@@ -108,6 +108,7 @@ const ReserveList = () => {
 
       {/* Tabla de tareas */}
       <div className="mt-2 overflow-x-auto">
+        <Suspense fallback={<div>Loading...</div>}>
         <table className="w-full table-auto">
           <thead className="bg-gray-400 text-white text-sm font-medium uppercase">
             <tr className="border-b border-gray-300">
@@ -148,11 +149,11 @@ const ReserveList = () => {
                   )}
                 </td>
                 <td className={`text-center text-sm`}>
-                  <p
+                  <span
                     className={`${getStatus(r.status)} mx-auto rounded-full p-1 text-center lg:w-[80%]`}
                   >
                     {r.status.toUpperCase()}
-                  </p>
+                  </span>
                 </td>
                 <td className="flex items-center justify-center gap-2 p-2 text-center text-sm">
                   <button
@@ -189,6 +190,7 @@ const ReserveList = () => {
             ))}
           </tbody>
         </table>
+        </Suspense>
       </div>
 
       {/* Formulario de creación de reserva */}

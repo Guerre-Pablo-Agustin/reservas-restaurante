@@ -67,7 +67,7 @@ export default function SideNav({ setIsCollapsed, isCollapsed }: {  setIsCollaps
                 transition={{ delay: 0.125 }}
                 className={`text-xs font-medium ${isMobile ? "hidden" : ""}`}
               >
-                Reservas <p>App</p>
+                Reservas App
               </motion.span>
             )}
         </Link>

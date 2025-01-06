@@ -91,7 +91,7 @@ const Create = ({
       id="create-modal"
       className="fixed top-24 md:top-5 z-50 w-[89%] md:w-[75%] items-center justify-center bg-white p-4 rounded-md border-2 border-gray-300 shadow-md font-serif"
     >
-        <p className="text-center text-2xl font-bold ">Crear reserva</p>
+        <span className="text-center text-2xl font-bold ">Crear reserva</span>
       <div className="flex flex-col gap-10 p-4">
         <div className="flex flex-col gap-2">
           <label

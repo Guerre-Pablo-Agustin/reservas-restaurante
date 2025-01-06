@@ -4,9 +4,12 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import LoginForm from '@/components/Login/LoginForm'
 import RegisterForm from '@/components/Login/RegisterForm'
+import { v4 as uuidv4 } from "uuid";
 
 export default function LoginPage() {
   const [isLogin, setIsLogin] = useState(true)
+
+  const initialId = uuidv4();
 
   const toggleForm = () => setIsLogin(!isLogin)
 
@@ -24,11 +27,11 @@ export default function LoginPage() {
               <h2 className="text-3xl font-bold mb-4">
                 {isLogin ? 'Bienvenido!' : 'Únete a nosotros!'}
               </h2>
-              <p className="mb-8">
+              <span className="mb-8">
                 {isLogin
                   ? 'Si no tienes una cuenta, puedes crear una nueva.'
                   : 'Si ya tienes una cuenta, inicia sesión para continuar.'}
-              </p>
+              </span>
               <button
                 onClick={toggleForm}
                 className="mt-4 px-6 py-2 border-2 border-white rounded-full text-white hover:bg-blue-600 hover:text-white transition-colors duration-300 "
@@ -41,7 +44,7 @@ export default function LoginPage() {
               transition={{ duration: 0.5, ease: 'easeInOut' }}
               className={`w-full p-8 flex justify-center items-center ${!isLogin ? 'mt-44' : ''}`}
             >
-              {isLogin ? <LoginForm /> : <RegisterForm />}
+              {isLogin ? <LoginForm /> : <RegisterForm  initialId={initialId}/>}
             </motion.div>
           </div>
 
@@ -52,7 +55,7 @@ export default function LoginPage() {
               animate={{ x: isLogin ? 0 : '100%' }}
               transition={{ duration: 0.5, ease: 'easeInOut' }}
             >
-              {isLogin ? <LoginForm /> : <RegisterForm />}
+              {isLogin ? <LoginForm /> : <RegisterForm initialId={initialId}/>}
             </motion.div>
             <motion.div
               className="w-1/2 bg-blue-600 text-white p-8 flex flex-col justify-center items-center text-center"
@@ -62,11 +65,11 @@ export default function LoginPage() {
               <h2 className="text-3xl font-bold mb-4">
                 {isLogin ? 'Bienvenido de vuelta!' : 'Únete a nosotros!'}
               </h2>
-              <p className="mb-8">
+              <span className="mb-8">
                 {isLogin
                   ? 'Si no tienes una cuenta, puedes crear una nueva.'
                   : 'Si ya tienes una cuenta, inicia sesión para continuar.'}
-              </p>
+              </span>
               <button
                 onClick={toggleForm}
                 className="px-6 py-2 border-2 border-white rounded-full text-white hover:bg-white hover:text-blue-600 transition-colors duration-300"

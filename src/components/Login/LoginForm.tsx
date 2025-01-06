@@ -95,7 +95,7 @@ function LoginForm() {
           )}
         </button>
       </div>
-      {error && <p className="text-sm text-error">{error}</p>}
+      {error && <span className="text-sm text-error">{error}</span>}
       <LoginButton />
       <div
         className="flex h-8 items-end space-x-1"

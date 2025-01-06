@@ -3,13 +3,17 @@ import { useStore } from "@/store/store";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useFormStatus } from "react-dom";
-import { BiArrowToRight, BiKey } from "react-icons/bi";
+import { BiArrowToRight} from "react-icons/bi";
 import {  BsKey } from "react-icons/bs";
 import { RiEyeCloseLine, RiEyeLine } from "react-icons/ri";
 import Swal from "sweetalert2";
-import { v4 as uuidv4 } from "uuid";
 
-function RegisterForm() {
+interface RegisterFormProps {
+  initialId: string;
+}
+
+
+function RegisterForm({ initialId }: RegisterFormProps) {
   //store
   const { createUser } = useStore();
 
@@ -41,7 +45,7 @@ function RegisterForm() {
 
     try {
       const newUser = {
-        id: uuidv4(),
+        id: initialId,
         email: userData.email,
         name: userData.name,
         lastName: userData.lastName,
@@ -82,6 +86,9 @@ function RegisterForm() {
   return (
     <form className="space-y-4" onSubmit={handleSubmit}>
       <h2 className="mb-6 text-2xl font-bold">Registrarse</h2>
+      <div className="flex flex-col lg:flex-row gap-4">
+
+      
       <div>
         <label
           htmlFor="name"
@@ -113,6 +120,7 @@ function RegisterForm() {
           className="w-full rounded-md border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary"
           required
         />
+      </div>
       </div>
       <div>
         <label
@@ -151,7 +159,7 @@ function RegisterForm() {
                 required
                 minLength={6}
               />
-              <BiKey className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
+              <BsKey className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
@@ -191,7 +199,7 @@ function RegisterForm() {
               <BsKey className="pointer-events-none absolute left-3 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-gray-500 peer-focus:text-gray-900" />
             </div>
           </div>
-      {error && <p className="text-sm text-red-500">{error}</p>}
+      {error && <span className="text-sm text-red-500">{error}</span>}
       <RegisterButton />
 
     </form>

@@ -27,7 +27,7 @@ const Create = ({
     details: "",
   });
 
-  const handleAddTask = () => {
+  const handleAddReservation = () => {
     if (
       !newReservation.clientName ||
       !newReservation.date ||
@@ -203,7 +203,7 @@ const Create = ({
 
       <div className="flex justify-end gap-2 p-4">
         <button
-          onClick={handleAddTask}
+          onClick={handleAddReservation}
           className="rounded bg-primary px-4 py-2 font-bold text-white shadow-md shadow-primary/50 hover:bg-blue-700"
         >
           <AiOutlinePlusCircle className="buton-crear text-2xl text-info" />

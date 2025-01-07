@@ -77,11 +77,11 @@ export default function ReservationForm() {
     <form onSubmit={handleAddReservation} className="max-w-md mx-auto">
       <div className="space-y-4">
         <div className="flex flex-col gap-2">
-          <label htmlFor="name">Nombre del cliente</label>
+          <label htmlFor="clientName">Nombre del cliente</label>
           <input
             type="text"
             id="name"
-            name="name"
+            name="clientName"
             value={newReservation.clientName}
             onChange={handleNewReservationChange}
             required
@@ -113,14 +113,15 @@ export default function ReservationForm() {
           />
         </div>
         <div className="flex flex-col gap-2">
-          <label htmlFor="people">Cantidad de personas</label>
+          <label htmlFor="quantity">Cantidad de personas</label>
           <input
             type="number"
-            id="people"
-            name="people"
+            id="quantity"
+            name="quantity"
             value={newReservation.quantity}
             onChange={handleNewReservationChange}
             min="1"
+            max="10"
             required
             className='border border-gray-600 rounded-lg p-2 text-sm'
           />

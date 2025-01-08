@@ -4,6 +4,12 @@ import Footer from "@/components/site/Footer/Footer"
 import Hero from "@/components/site/Hero/Hero"
 import Menu from "@/components/site/Menu/Menu"
 import Reserva from "@/components/site/Reserva/Reserva"
+import { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "Restaurante Site",
+  description: "Restaurante Site",
+};
 
 
 const page = () => {

@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { Reservation } from "@/types/types";
 import React, { useState } from "react";
 import { motion } from "framer-motion";
@@ -8,14 +8,11 @@ import { AiOutlinePlusCircle } from "react-icons/ai";
 import { v4 as uuidv4 } from "uuid";
 
 type Props = {
-  onClose: () => void;
-  setShowForm: React.Dispatch<React.SetStateAction<boolean>>;
+  onClose?: () => void;
+  setShowForm?: React.Dispatch<React.SetStateAction<boolean>>;
 };
-
-const Create = ({
-  onClose, setShowForm }: Props) => {
-
-    const { reservations, createReservation, setReservations } = useStore();
+const Create = ({ onClose = () => {}, setShowForm = () => {} }: Props) => {
+  const { reservations, createReservation, setReservations } = useStore();
 
   const [newReservation, setNewReservation] = useState<Reservation>({
     id: "",
@@ -73,15 +70,13 @@ const Create = ({
     setShowForm(false);
   };
 
-
   const handleNewReservationChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
     >,
-  ) => {setNewReservation({ ...newReservation, [e.target.name]: e.target.value });
+  ) => {
+    setNewReservation({ ...newReservation, [e.target.name]: e.target.value });
   };
-
- 
 
   return (
     <motion.div
@@ -89,9 +84,9 @@ const Create = ({
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.125 }}
       id="create-modal"
-      className="fixed top-24 md:top-5 z-50 w-[89%] md:w-[75%] items-center justify-center bg-white p-4 rounded-md border-2 border-gray-300 shadow-md font-serif"
+      className="fixed top-24 z-50 w-[89%] items-center justify-center rounded-md border-2 border-gray-300 bg-white p-4 font-serif shadow-md md:top-5 md:w-[75%]"
     >
-        <span className="text-center text-2xl font-bold ">Crear reserva</span>
+      <span className="text-center text-2xl font-bold">Crear reserva</span>
       <div className="flex flex-col gap-10 p-4">
         <div className="flex flex-col gap-2">
           <label
@@ -123,7 +118,7 @@ const Create = ({
               placeholder="Fecha"
             />
           </div>
-          
+
           <div className="flex flex-col gap-2">
             <label htmlFor="time" className="text-sm font-medium text-gray-800">
               Hora
@@ -157,7 +152,7 @@ const Create = ({
               placeholder="Cantidad"
             />
           </div>
-          <div className="flex flex-col gap-2 w-40">
+          <div className="flex w-40 flex-col gap-2">
             <label
               htmlFor="status"
               className="text-sm font-medium text-gray-800"
@@ -165,7 +160,7 @@ const Create = ({
               Estado
             </label>
             <select
-            className="w-full rounded-md border-gray-300 p-2 text-sm text-gray-800"
+              className="w-full rounded-md border-gray-300 p-2 text-sm text-gray-800"
               name="status"
               value={newReservation.status}
               onChange={(e) =>
@@ -220,4 +215,3 @@ const Create = ({
 };
 
 export default Create;
-  

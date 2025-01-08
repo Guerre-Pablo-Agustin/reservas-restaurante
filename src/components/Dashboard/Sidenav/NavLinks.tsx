@@ -8,7 +8,7 @@ import { motion } from "framer-motion";
 
 const Links = [
   { name: "home", href: "/dashboard", icon: BiHome },
-  { name: "reservas", href: "/dashboard/create", icon: BiNews },
+  { name: "Nueva reserva", href: "/dashboard/create", icon: BiNews },
   { name: "estadísticas", href: "/dashboard/kanban", icon: BsTabletFill },
 ];
 

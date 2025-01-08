@@ -21,7 +21,7 @@ const Hero = () => {
         <p className="mt-4 text-xl text-white md:text-2xl">
           Disfruta de la mejor experiencia culinaria en la ciudad
         </p>
-        <div className="mx-auto mt-6 w-48 rounded bg-primary px-4 py-2 text-lg font-semibold text-white hover:bg-primary/90 hover:scale-110 transition-transform duration-300">
+        <div className="mx-auto mt-6 w-48 rounded-full bg-primary px-4 py-2 text-lg font-semibold text-white hover:bg-primary/90 hover:scale-110 transition-transform duration-300 animate-bounce">
           <a href="#reserva">Hacer una Reserva</a>
         </div>
       </div>

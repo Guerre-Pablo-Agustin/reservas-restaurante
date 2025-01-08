@@ -1,14 +1,13 @@
-'use client'
+"use client";
 
-import { useStore } from '@/store/store';
-import { Reservation } from '@/types/types';
-import { useState } from 'react'
-import Swal from 'sweetalert2';
-import { v4 as uuidv4 } from 'uuid';
+import { useStore } from "@/store/store";
+import { Reservation } from "@/types/types";
+import { useState } from "react";
+import Swal from "sweetalert2";
+import { v4 as uuidv4 } from "uuid";
 
 export default function ReservationForm() {
-
-    const {reservations, createReservation, setReservations} = useStore();
+  const { reservations, createReservation, setReservations } = useStore();
 
   const [newReservation, setNewReservation] = useState<Reservation>({
     id: "",
@@ -18,15 +17,15 @@ export default function ReservationForm() {
     status: "pendiente",
     quantity: 1,
     details: "",
-  })
+  });
 
-  
-    const handleNewReservationChange = (
-      e: React.ChangeEvent<
-        HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-      >,
-    ) => {setNewReservation({ ...newReservation, [e.target.name]: e.target.value });
-    };
+  const handleNewReservationChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >,
+  ) => {
+    setNewReservation({ ...newReservation, [e.target.name]: e.target.value });
+  };
 
   const handleAddReservation = () => {
     if (
@@ -74,7 +73,7 @@ export default function ReservationForm() {
   };
 
   return (
-    <form onSubmit={handleAddReservation} className="max-w-md mx-auto">
+    <form onSubmit={handleAddReservation} className="mx-auto max-w-md">
       <div className="space-y-4">
         <div className="flex flex-col gap-2">
           <label htmlFor="clientName">Nombre del cliente</label>
@@ -85,32 +84,34 @@ export default function ReservationForm() {
             value={newReservation.clientName}
             onChange={handleNewReservationChange}
             required
-            className='border border-gray-600 rounded-lg p-2 text-sm'
+            className="rounded-lg border border-gray-600 p-2 text-sm"
           />
         </div>
-        <div className="flex flex-col gap-2">
-          <label htmlFor="date">Fecha</label>
-          <input
-            type="date"
-            id="date"
-            name="date"
-            value={newReservation.date}
-            onChange={handleNewReservationChange}
-            required
-            className='border border-gray-600 rounded-lg p-2 text-sm'
-          />
-        </div>
-        <div className="flex flex-col gap-2">
-          <label htmlFor="time">Hora</label>
-          <input
-            type="time"
-            id="time"
-            name="time"
-            value={newReservation.time}
-            onChange={handleNewReservationChange}
-            required
-            className='border border-gray-600 rounded-lg p-2 text-sm'
-          />
+        <div className="flex flex-col lg:flex-row gap-2">
+          <div className="flex flex-col gap-2 lg:w-1/2">
+            <label htmlFor="date">Fecha</label>
+            <input
+              type="date"
+              id="date"
+              name="date"
+              value={newReservation.date}
+              onChange={handleNewReservationChange}
+              required
+              className="rounded-lg border border-gray-600 p-2 text-sm"
+            />
+          </div>
+          <div className="flex flex-col gap-2 lg:w-1/2">
+            <label htmlFor="time">Hora</label>
+            <input
+              type="time"
+              id="time"
+              name="time"
+              value={newReservation.time}
+              onChange={handleNewReservationChange}
+              required
+              className="rounded-lg border border-gray-600 p-2 text-sm"
+            />
+          </div>
         </div>
         <div className="flex flex-col gap-2">
           <label htmlFor="quantity">Cantidad de personas</label>
@@ -123,7 +124,7 @@ export default function ReservationForm() {
             min="1"
             max="10"
             required
-            className='border border-gray-600 rounded-lg p-2 text-sm'
+            className="rounded-lg border border-gray-600 p-2 text-sm"
           />
         </div>
         <div className="flex flex-col gap-2">
@@ -134,11 +135,16 @@ export default function ReservationForm() {
             value={newReservation.details}
             onChange={handleNewReservationChange}
             rows={3}
-            className='border border-gray-600 rounded-lg p-2 text-sm'
+            className="rounded-lg border border-gray-600 p-2 text-sm"
           />
         </div>
-        <button type="submit" className="w-full bg-primary rounded-lg py-2 px-4 text-white hover:bg-primary/90 hover:scale-110 transition-transform duration-300">Enviar Reserva</button>
+        <button
+          type="submit"
+          className="w-full rounded-full bg-primary px-4 py-2 text-white transition-transform duration-300 hover:scale-110 hover:bg-primary/90"
+        >
+          Enviar Reserva
+        </button>
       </div>
     </form>
-  )
+  );
 }

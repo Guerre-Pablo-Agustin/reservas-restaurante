@@ -13,6 +13,7 @@ type Props = {
 };
 const Create = ({ onClose = () => {}, setShowForm = () => {} }: Props) => {
   const { reservations, createReservation, setReservations } = useStore();
+  
 
   const [newReservation, setNewReservation] = useState<Reservation>({
     id: "",

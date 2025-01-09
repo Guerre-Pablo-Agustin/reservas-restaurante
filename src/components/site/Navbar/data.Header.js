@@ -1,17 +1,17 @@
 export const dataHeader = [
   {
     id: 1,
-    name: "Inicio",
+    name: "home",
     link: "#hero",
   },
   {
     id: 2,
-    name: "Sobre Nosotros",
+    name: "about",
     link: "#about",
   },
   {
     id: 3,
-    name: "Menu",
+    name: "Menus",
     link: "#menu",
   },
   {

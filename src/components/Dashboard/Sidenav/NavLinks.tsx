@@ -3,13 +3,14 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { BiHome, BiNews } from "react-icons/bi";
-import { BsTabletFill } from "react-icons/bs";
+import { BsTabletFill, BsListUl } from "react-icons/bs";
 import { motion } from "framer-motion";
 
 const Links = [
-  { name: "home", href: "/dashboard", icon: BiHome },
+  { name: "Inicio", href: "/dashboard", icon: BiHome },
   { name: "Nueva reserva", href: "/dashboard/create", icon: BiNews },
-  { name: "estadísticas", href: "/dashboard/kanban", icon: BsTabletFill },
+  { name: "Lista de reservas", href: "/dashboard/reservations", icon: BsListUl },
+  { name: "Estadísticas", href: "/dashboard/kanban", icon: BsTabletFill },
 ];
 
 export default function NavLinks({
@@ -23,9 +24,8 @@ export default function NavLinks({
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 12 }}
+      initial={false}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.125 }}
       className="flex w-[60%] justify-between gap-2 px-2 md:w-full md:flex-col"
     >
       {Links.map((link) => {
@@ -40,17 +40,11 @@ export default function NavLinks({
                 : "text-gray-800 hover:bg-sky-100 hover:text-primary"
             }`}
           >
-            <LinkIcon className="h-full w-9 text-3xl font-bold text-primary " />
+            <LinkIcon className="h-full w-9 text-3xl font-bold text-primary" />
             {!isCollapsed && (
-              <motion.span
-                layout
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.125 }}
-                className={`text-xs font-medium text-center justify-start ${isMobile ? "hidden" : ""}`}
-              >
+              <span className={`text-xs font-medium text-center justify-start ${isMobile ? "hidden" : ""}`}>
                 {link.name}
-              </motion.span>
+              </span>
             )}
           </Link>
         );

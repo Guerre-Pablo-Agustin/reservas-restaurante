@@ -3,7 +3,7 @@ import { reviews } from './data.reviews'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Autoplay, Pagination } from 'swiper/modules'
 import { FaStar } from 'react-icons/fa'
-import Image from 'next/image'
+// import Image from 'next/image'
 
 // Importar estilos de Swiper
 import 'swiper/css'

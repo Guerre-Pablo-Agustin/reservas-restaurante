@@ -11,8 +11,46 @@ import { RiDeleteBin5Line } from "react-icons/ri";
 import { CiEdit } from "react-icons/ci";
 import { Tooltip } from "react-tooltip";
 
+// Componente del lado del cliente para el formateo de fechas
+const FormattedDate = ({ date, type }: { date: string; type: 'date' | 'time' }) => {
+  // Inicializar con un formato consistente para evitar hidratación
+  const [formattedValue, setFormattedValue] = useState(() => {
+    const d = new Date(date);
+    if (type === 'date') {
+      return d.toISOString().split('T')[0];
+    } else {
+      return d.toISOString().split('T')[1].substring(0, 5);
+    }
+  });
+
+  useEffect(() => {
+    // Solo actualizar al formato localizado después de la hidratación
+    const d = new Date(date);
+    if (type === 'date') {
+      setFormattedValue(d.toLocaleDateString("es-ES", {
+        year: "numeric",
+        month: "short",
+        day: "2-digit",
+      }));
+    } else {
+      setFormattedValue(d.toLocaleTimeString("es-ES", {
+        hour: "2-digit",
+        minute: "2-digit",
+        hour12: true,
+      }));
+    }
+  }, [date, type]);
+
+  return <span suppressHydrationWarning={true}>{formattedValue}</span>;
+};
+
 const ReserveList = () => {
   const { reservations, deleteReservation, loadReservations } = useStore();
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   //busqueda
   const [search, setSearch] = useState("");
@@ -40,8 +78,6 @@ const ReserveList = () => {
   useEffect(() => {
     loadReservations();
   }, [loadReservations]);
-
- 
 
   const getStatus = (status: string) => {
     switch (status) {
@@ -86,14 +122,16 @@ const ReserveList = () => {
   const [showDetails, setShowDetails] = useState(false);
   const [selectId, setSelectId] = useState<string>("");
 
-  console.log("reservas", reservations);
+  if (!isClient) {
+    return <div suppressHydrationWarning>Cargando...</div>;
+  }
 
   return (
-    <section>
-      <div className="mb-4 text-center text-2xl font-bold">Lista de reservas</div>
+    <section suppressHydrationWarning>
+      <div suppressHydrationWarning className="mb-4 text-center text-2xl font-bold">Lista de reservas</div>
 
       {/* Buscador */}
-      <div className="mx-auto flex w-full max-w-screen-lg items-center gap-4 rounded-md px-6 py-4">
+      <div suppressHydrationWarning className="mx-auto flex w-full max-w-screen-lg items-center gap-4 rounded-md px-6 py-4">
         <Searcher search={search} setSearch={setSearch} />
         <button
           onClick={() => setShowForm(true)}
@@ -107,54 +145,40 @@ const ReserveList = () => {
       <br />
 
       {/* Tabla de tareas */}
-      <div className="mt-2 overflow-x-auto">
-        <table className="w-full table-auto">
-          <thead className="bg-gray-400 text-white text-sm font-medium uppercase">
-            <tr className="border-b border-gray-300">
-              <th className="p-3 text-left rounded-l-lg">#</th>
-              <th className="p-3 text-left">Cliente</th>
-              <th className="p-3 text-center">Cantidad</th>
-              <th className="p-3 text-center">Fecha</th>
-              <th className="p-3 text-center">Hora</th>
-              <th className="p-3 text-center">Estado</th>
-              <th className="p-3 text-center rounded-r-lg">Acciones</th>
+      <div suppressHydrationWarning className="mt-2 overflow-x-auto">
+        <table suppressHydrationWarning className="w-full table-auto">
+          <thead suppressHydrationWarning className="bg-gray-400 text-white text-sm font-medium uppercase">
+            <tr suppressHydrationWarning className="border-b border-gray-300">
+              <th suppressHydrationWarning className="p-3 text-left rounded-l-lg">#</th>
+              <th suppressHydrationWarning className="p-3 text-left">Cliente</th>
+              <th suppressHydrationWarning className="p-3 text-center">Cantidad</th>
+              <th suppressHydrationWarning className="p-3 text-center">Fecha</th>
+              <th suppressHydrationWarning className="p-3 text-center">Hora</th>
+              <th suppressHydrationWarning className="p-3 text-center">Estado</th>
+              <th suppressHydrationWarning className="p-3 text-center rounded-r-lg">Acciones</th>
             </tr>
           </thead>
 
-          <tbody className="divide-y divide-gray-300">
+          <tbody suppressHydrationWarning className="divide-y divide-gray-300">
             {currentReservations.map((r) => (
-              <tr key={r.id} className="even:bg-gray-100">
-                <td className="p-2 text-center text-sm">{r.id}</td>
-                <td className="p-2 text-center text-sm">{r.clientName}</td>
-                <td className="p-2 text-center text-sm">{r.quantity}</td>
-                <td className="p-2 text-center text-sm">
-                {new Date(r.date).toLocaleString(
-                    "es-ES",
-                    {
-                      year: "numeric",
-                      month: "short",
-                      day: "2-digit",
-                    }
-                  )}
+              <tr suppressHydrationWarning key={r.id} className="even:bg-gray-100">
+                <td suppressHydrationWarning className="p-2 text-center text-sm">{r.id}</td>
+                <td suppressHydrationWarning className="p-2 text-center text-sm">{r.clientName}</td>
+                <td suppressHydrationWarning className="p-2 text-center text-sm">{r.quantity}</td>
+                <td suppressHydrationWarning className="p-2 text-center text-sm">
+                  <FormattedDate date={r.date} type="date" />
                 </td>
-                <td className="p-2 text-center text-sm">
-                {new Date(r.date).toLocaleString(
-                    "es-ES",
-                    {
-                      hour: "2-digit",
-                      minute: "2-digit",
-                      hour12: true,
-                    }
-                  )}
+                <td suppressHydrationWarning className="p-2 text-center text-sm">
+                  <FormattedDate date={r.date} type="time" />
                 </td>
-                <td className={`text-center text-sm`}>
-                  <span
+                <td suppressHydrationWarning className={`text-center text-sm`}>
+                  <span suppressHydrationWarning
                     className={`${getStatus(r.status)} mx-auto rounded-full p-1 text-center lg:w-[80%]`}
                   >
                     {r.status.toUpperCase()}
                   </span>
                 </td>
-                <td className="flex items-center justify-center gap-2 p-2 text-center text-sm">
+                <td suppressHydrationWarning className="flex items-center justify-center gap-2 p-2 text-center text-sm">
                   <button
                     data-tip="Editar"
                     onClick={() => {
@@ -202,7 +226,7 @@ const ReserveList = () => {
       )}
 
       {/* Paginación */}
-      <div className="mt-4 flex items-center justify-center gap-2">
+      <div suppressHydrationWarning className="mt-4 flex items-center justify-center gap-2">
         <Paginated
           currentPage={currentPage}
           totalPages={totalPages}

@@ -17,7 +17,7 @@ const Reserva = () => {
             className="rounded-lg shadow-xl w-[80%]"
           />
         </div>
-        <div className="md:w-1/2 md:pl-10">
+        <div className="w-full md:w-1/2 md:pl-10">
           <ReservationForm />
         </div>
       </div>

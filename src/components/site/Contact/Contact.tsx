@@ -21,7 +21,7 @@ const Contact = () => {
                   Horario: Lunes a Domingo, 12:00 PM - 10:00 PM
                 </p>
               </div>
-              <div className="md:w-1/2 mb-6 md:mb-0 flex items-center justify-center">
+              <div className="md:w-1/2 mb-6 md:mb-0 flex items-center justify-center mt-5 md:mt-0">
                 <Image
                   src="/images/site/contact/contacto.jpg"
                   alt="Ubicación del restaurante"

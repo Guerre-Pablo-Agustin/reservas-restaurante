@@ -3,7 +3,7 @@ import { reviews } from './data.reviews'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Autoplay, Pagination } from 'swiper/modules'
 import { FaStar } from 'react-icons/fa'
-// import Image from 'next/image'
+import Image from 'next/image'
 
 // Importar estilos de Swiper
 import 'swiper/css'
@@ -44,14 +44,14 @@ const Reviews = () => {
                         <SwiperSlide key={review.id}>
                             <div className="bg-white p-6 rounded-lg shadow-lg">
                                 <div className="flex items-center mb-4">
-                                    {/* <div className="relative w-12 h-12 mr-4">
+                                    <div className="relative w-12 h-12 mr-4">
                                         <Image
                                             src={review.image || '/avatars/default-avatar.jpg'}
                                             alt={review.name}
                                             fill
                                             className="rounded-full object-cover"
                                         />
-                                    </div> */}
+                                    </div>
                                     <div>
                                         <h3 className="font-semibold text-lg">{review.name}</h3>
                                         <div className="flex">

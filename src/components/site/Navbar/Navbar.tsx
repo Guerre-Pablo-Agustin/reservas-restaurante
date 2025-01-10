@@ -51,7 +51,7 @@ export function Navbar({ openMobileMenu }: Props) {
               <Link
                 href={link}
                 key={id}
-                className="block hover:text-primary hover:border-b-[1px]"
+                className="block hover:text-primary hover:border-b-[1px] "
               >
                 {name}
               </Link>
@@ -62,7 +62,7 @@ export function Navbar({ openMobileMenu }: Props) {
         <div
           className={`${
             openMobileMenu
-              ? "absolute top-24 bg-primary text-center w-[75%] flex flex-col rounded-lg justify-center items-center px-4 py-6 z-[9999] mx-auto"
+              ? "absolute top-24 bg-primary text-center w-[75%] flex flex-col rounded-lg justify-center items-center px-4 py-6 z-[9999] mx-auto "
               : "hidden"
           } gap-5 md:flex`}
         >
@@ -70,7 +70,7 @@ export function Navbar({ openMobileMenu }: Props) {
             <Link
               href={link}
               key={id}
-              className="block hover:text-primary font-bold hover:border-b-[1px]"
+              className="block hover:text-primary font-bold hover:border-b-[1px] text-white"
             >
              {name}
             </Link>

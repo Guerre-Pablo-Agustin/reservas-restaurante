@@ -63,7 +63,7 @@ export default function LoginPage() {
               transition={{ duration: 0.5, ease: 'easeInOut' }}
             >
               <h2 className="text-3xl font-bold mb-4">
-                {isLogin ? 'Bienvenido de vuelta!' : 'Únete a nosotros!'}
+                {isLogin ? 'Bienvenido!' : '¡Bienvenido!'}
               </h2>
               <span className="mb-8">
                 {isLogin

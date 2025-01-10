@@ -3,8 +3,8 @@ import React from "react";
 
 const Hero = () => {
   return (
-    <section id="inicio" className="relative bg-gray-100 py-20">
-      <div className="absolute inset-0 h-[80vh] w-full">
+    <section id="inicio" className="relative bg-gray-100">
+      <div className="absolute inset-0 h-screen w-full">
         <Image
           src="/images/site/Hero/Hero.jpg"
           alt="Imagen del restaurante"
@@ -14,7 +14,7 @@ const Hero = () => {
         />
         <div className="absolute inset-0 bg-black opacity-50"></div>
       </div>
-      <div className="container relative z-10 mx-auto px-6 py-10 text-center">
+      <div className="container relative z-10 mx-auto h-screen px-6 flex flex-col justify-center items-center">
         <h1 className="text-4xl font-bold text-white md:text-6xl">
           Bienvenidos a El Buen Sabor
         </h1>

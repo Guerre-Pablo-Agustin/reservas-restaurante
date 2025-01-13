@@ -6,16 +6,19 @@ export type User = {
   password: string;
   role : 'admin';
   image: string;
+  reservations: Reservation[];
 };
 
 
 export type Reservation = {
   id: string;
   clientName: string;
+  phone: string;
   date: string;
   time: string;
   status: "pendiente" | "confirmada" | "cancelada";
   quantity: number;
   details: string;
+  userId:string
 
 };

@@ -1,10 +1,10 @@
-'use client'
-import React, { useState, useEffect } from 'react';
-import { useStore } from '@/store/store';
-import { Reservation } from '@/types/types';
-import Swal from 'sweetalert2';
-import { motion } from 'framer-motion';
-import { CiEdit } from 'react-icons/ci';
+"use client";
+import React, { useState, useEffect } from "react";
+import { useStore } from "@/store";
+import { Reservation } from "@/types/types";
+import Swal from "sweetalert2";
+import { motion } from "framer-motion";
+import { CiEdit } from "react-icons/ci";
 
 type Props = {
   setShowDetails: React.Dispatch<React.SetStateAction<boolean>>;
@@ -14,23 +14,23 @@ type Props = {
 const Details = ({ setShowDetails, selectId }: Props) => {
   const { reservations, updateReservation } = useStore();
 
-
   const selectedReservation = reservations.find(
-    (reservation) => reservation.id === selectId
+    (reservation) => reservation.id === selectId,
   );
 
-  
-  const [editableReservation, setEditableReservation] = useState<Partial<Reservation>>(
-    selectedReservation || {}
-  );
+  const [editableReservation, setEditableReservation] = useState<
+    Partial<Reservation>
+  >(selectedReservation || {});
 
- 
   useEffect(() => {
     setEditableReservation(selectedReservation || {});
   }, [selectedReservation]);
 
- 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >,
+  ) => {
     const { name, value } = e.target;
     setEditableReservation((prev) => ({ ...prev, [name]: value }));
   };
@@ -40,7 +40,10 @@ const Details = ({ setShowDetails, selectId }: Props) => {
       id: selectedReservation?.id || "",
       clientName: editableReservation.clientName,
       details: editableReservation.details,
-      status: editableReservation.status as "pendiente" | "confirmada" | "cancelada",
+      status: editableReservation.status as
+        | "pendiente"
+        | "confirmada"
+        | "cancelada",
       date: editableReservation.date,
       time: editableReservation.time,
       quantity: editableReservation.quantity,
@@ -57,22 +60,28 @@ const Details = ({ setShowDetails, selectId }: Props) => {
 
   return (
     <motion.div
-    initial={{ opacity: 0, y: 12 }}
+      initial={{ opacity: 0, y: 12 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.125 }}
       id="create-modal"
-     className="fixed top-24 md:top-5 z-50 w-[89%] px-4 md:w-[65%] items-center justify-center bg-white p-4 rounded-md border-2 border-gray-300 shadow-md font-serif">
-      <span className="text-center text-2xl font-bold">Detalles de la reserva</span>
+      className="fixed top-24 z-50 w-[89%] items-center justify-center rounded-md border-2 border-gray-300 bg-white p-4 px-4 font-serif shadow-md md:top-5 md:w-[65%]"
+    >
+      <span className="text-center text-2xl font-bold">
+        Detalles de la reserva
+      </span>
 
       <div className="flex flex-col gap-10 p-4">
         <div className="flex flex-col gap-2">
-          <label htmlFor="clientName" className="text-sm font-medium text-gray-800">
+          <label
+            htmlFor="clientName"
+            className="text-sm font-medium text-gray-800"
+          >
             Cliente
           </label>
           <input
             type="text"
             name="clientName"
-            value={editableReservation.clientName || ''}
+            value={editableReservation.clientName || ""}
             onChange={handleChange}
             className="w-full rounded-md border-gray-300 p-2 text-sm text-gray-800"
             placeholder="Nombre del cliente"
@@ -87,7 +96,7 @@ const Details = ({ setShowDetails, selectId }: Props) => {
             <input
               type="date"
               name="date"
-              value={editableReservation.date || ''}
+              value={editableReservation.date || ""}
               onChange={handleChange}
               className="w-full rounded-md border-gray-300 p-2 text-sm text-gray-800"
             />
@@ -100,7 +109,7 @@ const Details = ({ setShowDetails, selectId }: Props) => {
             <input
               type="time"
               name="time"
-              value={editableReservation.time || ''}
+              value={editableReservation.time || ""}
               onChange={handleChange}
               className="w-full rounded-md border-gray-300 p-2 text-sm text-gray-800"
             />
@@ -109,7 +118,10 @@ const Details = ({ setShowDetails, selectId }: Props) => {
 
         <div className="flex flex-row gap-16">
           <div className="flex flex-col gap-2">
-            <label htmlFor="quantity" className="text-sm font-medium text-gray-800">
+            <label
+              htmlFor="quantity"
+              className="text-sm font-medium text-gray-800"
+            >
               Cantidad
             </label>
             <input
@@ -117,20 +129,23 @@ const Details = ({ setShowDetails, selectId }: Props) => {
               name="quantity"
               min={1}
               max={10}
-              value={editableReservation.quantity || ''}
+              value={editableReservation.quantity || ""}
               onChange={handleChange}
               className="w-full rounded-md border-gray-300 p-2 text-sm text-gray-800"
               placeholder="Cantidad"
             />
           </div>
 
-          <div className="flex flex-col gap-2 w-40">
-            <label htmlFor="status" className="text-sm font-medium text-gray-800">
+          <div className="flex w-40 flex-col gap-2">
+            <label
+              htmlFor="status"
+              className="text-sm font-medium text-gray-800"
+            >
               Estado
             </label>
             <select
               name="status"
-              value={editableReservation.status || ''}
+              value={editableReservation.status || ""}
               onChange={handleChange}
               className="w-full rounded-md border-gray-300 p-2 text-sm text-gray-800"
             >
@@ -142,12 +157,15 @@ const Details = ({ setShowDetails, selectId }: Props) => {
         </div>
 
         <div className="flex flex-col gap-2">
-          <label htmlFor="details" className="text-sm font-medium text-gray-800">
+          <label
+            htmlFor="details"
+            className="text-sm font-medium text-gray-800"
+          >
             Detalles
           </label>
           <textarea
             name="details"
-            value={editableReservation.details || ''}
+            value={editableReservation.details || ""}
             onChange={handleChange}
             className="w-full rounded-md border-gray-300 p-2 text-sm text-gray-800"
             placeholder="Detalles"
@@ -156,12 +174,15 @@ const Details = ({ setShowDetails, selectId }: Props) => {
       </div>
 
       <div className="flex justify-end gap-4">
-        <button onClick={handlerEditReservation} className="rounded-full bg-primary px-4 py-2 font-bold text-white shadow-md shadow-primary/50 hover:bg-blue-700">
-        <CiEdit className="buton-editar text-2xl text-info" />
+        <button
+          onClick={handlerEditReservation}
+          className="rounded-full bg-primary px-4 py-2 font-bold text-white shadow-md shadow-primary/50 hover:bg-blue-700"
+        >
+          <CiEdit className="buton-editar text-2xl text-info" />
         </button>
         <button
           onClick={() => setShowDetails(false)}
-          className="rounded-full bg-red-500 px-4 py-2 font-bold text-white shadow-md shadow-red-500/50 hover:bg-red-700 "
+          className="rounded-full bg-red-500 px-4 py-2 font-bold text-white shadow-md shadow-red-500/50 hover:bg-red-700"
         >
           Cerrar
         </button>

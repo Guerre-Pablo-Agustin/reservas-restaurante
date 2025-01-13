@@ -3,7 +3,7 @@ import { Reservation } from "@/types/types";
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import Swal from "sweetalert2";
-import { useStore } from "@/store/store";
+import { useStore } from "@/store";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import { v4 as uuidv4 } from "uuid";
 
@@ -13,7 +13,6 @@ type Props = {
 };
 const Create = ({ onClose = () => {}, setShowForm = () => {} }: Props) => {
   const { reservations, createReservation, setReservations } = useStore();
-  
 
   const [newReservation, setNewReservation] = useState<Reservation>({
     id: "",

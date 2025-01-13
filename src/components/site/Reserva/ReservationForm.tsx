@@ -1,17 +1,18 @@
 "use client";
 
-import { useStore } from "@/store/store";
+import { useReservationStore } from "@/store";
 import { Reservation } from "@/types/types";
 import { useState } from "react";
 import Swal from "sweetalert2";
 import { v4 as uuidv4 } from "uuid";
 
 export default function ReservationForm() {
-  const { reservations, createReservation, setReservations } = useStore();
+  const { reservations, createReservation, setReservations } = useReservationStore();
 
   const [newReservation, setNewReservation] = useState<Reservation>({
     id: "",
     clientName: "",
+    phone: "",
     date: "",
     time: "",
     status: "pendiente",
@@ -30,6 +31,7 @@ export default function ReservationForm() {
   const handleAddReservation = () => {
     if (
       !newReservation.clientName ||
+      !newReservation.phone ||
       !newReservation.date ||
       !newReservation.time ||
       !newReservation.quantity ||
@@ -47,6 +49,7 @@ export default function ReservationForm() {
     const data = {
       id: uuidv4(),
       clientName: newReservation.clientName,
+      phone: newReservation.phone,
       details: newReservation.details,
       status: newReservation.status as "pendiente" | "confirmada" | "cancelada",
       date: newReservation.date,
@@ -64,6 +67,7 @@ export default function ReservationForm() {
     setNewReservation({
       id: "",
       clientName: "",
+      phone: "",
       date: "",
       time: "",
       status: "pendiente",
@@ -75,7 +79,8 @@ export default function ReservationForm() {
   return (
     <form onSubmit={handleAddReservation} className="mx-auto max-w-md">
       <div className="space-y-4">
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2 lg:flex-row">
+        <div className="flex flex-col gap-2 lg:w-1/2">
           <label htmlFor="clientName">Nombre del cliente</label>
           <input
             type="text"
@@ -87,7 +92,20 @@ export default function ReservationForm() {
             className="rounded-lg border border-gray-600 p-2 text-sm"
           />
         </div>
-        <div className="flex flex-col lg:flex-row gap-2">
+        <div className="flex flex-col gap-2 lg:w-1/2">
+          <label htmlFor="clientPhone">Teléfono</label>
+          <input
+            type="text"
+            id="phone"
+            name="clientPhone"
+            value={newReservation.phone}
+            onChange={handleNewReservationChange}
+            required
+            className="rounded-lg border border-gray-600 p-2 text-sm"
+          />
+        </div>
+        </div>
+        <div className="flex flex-col gap-2 lg:flex-row">
           <div className="flex flex-col gap-2 lg:w-1/2">
             <label htmlFor="date">Fecha</label>
             <input

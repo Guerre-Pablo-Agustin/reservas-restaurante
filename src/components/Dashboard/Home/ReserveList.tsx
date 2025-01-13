@@ -4,7 +4,7 @@ import Swal from "sweetalert2";
 import { useEffect, useState } from "react";
 import Searcher from "./Searcher";
 import Paginated from "./Paginated";
-import { useStore } from "@/store/store";
+import { useStore } from "@/store";
 import Create from "./Create";
 import Details from "./Details";
 import { RiDeleteBin5Line } from "react-icons/ri";
@@ -12,32 +12,42 @@ import { CiEdit } from "react-icons/ci";
 import { Tooltip } from "react-tooltip";
 
 // Componente del lado del cliente para el formateo de fechas
-const FormattedDate = ({ date, type }: { date: string; type: 'date' | 'time' }) => {
+const FormattedDate = ({
+  date,
+  type,
+}: {
+  date: string;
+  type: "date" | "time";
+}) => {
   // Inicializar con un formato consistente para evitar hidratación
   const [formattedValue, setFormattedValue] = useState(() => {
     const d = new Date(date);
-    if (type === 'date') {
-      return d.toISOString().split('T')[0];
+    if (type === "date") {
+      return d.toISOString().split("T")[0];
     } else {
-      return d.toISOString().split('T')[1].substring(0, 5);
+      return d.toISOString().split("T")[1].substring(0, 5);
     }
   });
 
   useEffect(() => {
     // Solo actualizar al formato localizado después de la hidratación
     const d = new Date(date);
-    if (type === 'date') {
-      setFormattedValue(d.toLocaleDateString("es-ES", {
-        year: "numeric",
-        month: "short",
-        day: "2-digit",
-      }));
+    if (type === "date") {
+      setFormattedValue(
+        d.toLocaleDateString("es-ES", {
+          year: "numeric",
+          month: "short",
+          day: "2-digit",
+        }),
+      );
     } else {
-      setFormattedValue(d.toLocaleTimeString("es-ES", {
-        hour: "2-digit",
-        minute: "2-digit",
-        hour12: true,
-      }));
+      setFormattedValue(
+        d.toLocaleTimeString("es-ES", {
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: true,
+        }),
+      );
     }
   }, [date, type]);
 
@@ -128,10 +138,18 @@ const ReserveList = () => {
 
   return (
     <section suppressHydrationWarning>
-      <div suppressHydrationWarning className="mb-4 text-center text-2xl font-bold">Lista de reservas</div>
+      <div
+        suppressHydrationWarning
+        className="mb-4 text-center text-2xl font-bold"
+      >
+        Lista de reservas
+      </div>
 
       {/* Buscador */}
-      <div suppressHydrationWarning className="mx-auto flex w-full max-w-screen-lg items-center gap-4 rounded-md px-6 py-4">
+      <div
+        suppressHydrationWarning
+        className="mx-auto flex w-full max-w-screen-lg items-center gap-4 rounded-md px-6 py-4"
+      >
         <Searcher search={search} setSearch={setSearch} />
         <button
           onClick={() => setShowForm(true)}
@@ -147,38 +165,90 @@ const ReserveList = () => {
       {/* Tabla de tareas */}
       <div suppressHydrationWarning className="mt-2 overflow-x-auto">
         <table suppressHydrationWarning className="w-full table-auto">
-          <thead suppressHydrationWarning className="bg-gray-400 text-white text-sm font-medium uppercase">
+          <thead
+            suppressHydrationWarning
+            className="bg-gray-400 text-sm font-medium uppercase text-white"
+          >
             <tr suppressHydrationWarning className="border-b border-gray-300">
-              <th suppressHydrationWarning className="p-3 text-left rounded-l-lg">#</th>
-              <th suppressHydrationWarning className="p-3 text-left">Cliente</th>
-              <th suppressHydrationWarning className="p-3 text-center">Cantidad</th>
-              <th suppressHydrationWarning className="p-3 text-center">Fecha</th>
-              <th suppressHydrationWarning className="p-3 text-center">Hora</th>
-              <th suppressHydrationWarning className="p-3 text-center">Estado</th>
-              <th suppressHydrationWarning className="p-3 text-center rounded-r-lg">Acciones</th>
+              <th
+                suppressHydrationWarning
+                className="rounded-l-lg p-3 text-left"
+              >
+                #
+              </th>
+              <th suppressHydrationWarning className="p-3 text-left">
+                Cliente
+              </th>
+              <th suppressHydrationWarning className="p-3 text-center">
+                Cantidad
+              </th>
+              <th suppressHydrationWarning className="p-3 text-center">
+                Fecha
+              </th>
+              <th suppressHydrationWarning className="p-3 text-center">
+                Hora
+              </th>
+              <th suppressHydrationWarning className="p-3 text-center">
+                Estado
+              </th>
+              <th
+                suppressHydrationWarning
+                className="rounded-r-lg p-3 text-center"
+              >
+                Acciones
+              </th>
             </tr>
           </thead>
 
           <tbody suppressHydrationWarning className="divide-y divide-gray-300">
             {currentReservations.map((r) => (
-              <tr suppressHydrationWarning key={r.id} className="even:bg-gray-100">
-                <td suppressHydrationWarning className="p-2 text-center text-sm">{r.id}</td>
-                <td suppressHydrationWarning className="p-2 text-center text-sm">{r.clientName}</td>
-                <td suppressHydrationWarning className="p-2 text-center text-sm">{r.quantity}</td>
-                <td suppressHydrationWarning className="p-2 text-center text-sm">
+              <tr
+                suppressHydrationWarning
+                key={r.id}
+                className="even:bg-gray-100"
+              >
+                <td
+                  suppressHydrationWarning
+                  className="p-2 text-center text-sm"
+                >
+                  {r.id}
+                </td>
+                <td
+                  suppressHydrationWarning
+                  className="p-2 text-center text-sm"
+                >
+                  {r.clientName}
+                </td>
+                <td
+                  suppressHydrationWarning
+                  className="p-2 text-center text-sm"
+                >
+                  {r.quantity}
+                </td>
+                <td
+                  suppressHydrationWarning
+                  className="p-2 text-center text-sm"
+                >
                   <FormattedDate date={r.date} type="date" />
                 </td>
-                <td suppressHydrationWarning className="p-2 text-center text-sm">
+                <td
+                  suppressHydrationWarning
+                  className="p-2 text-center text-sm"
+                >
                   <FormattedDate date={r.date} type="time" />
                 </td>
                 <td suppressHydrationWarning className={`text-center text-sm`}>
-                  <span suppressHydrationWarning
+                  <span
+                    suppressHydrationWarning
                     className={`${getStatus(r.status)} mx-auto rounded-full p-1 text-center lg:w-[80%]`}
                   >
                     {r.status.toUpperCase()}
                   </span>
                 </td>
-                <td suppressHydrationWarning className="flex items-center justify-center gap-2 p-2 text-center text-sm">
+                <td
+                  suppressHydrationWarning
+                  className="flex items-center justify-center gap-2 p-2 text-center text-sm"
+                >
                   <button
                     data-tip="Editar"
                     onClick={() => {
@@ -226,7 +296,10 @@ const ReserveList = () => {
       )}
 
       {/* Paginación */}
-      <div suppressHydrationWarning className="mt-4 flex items-center justify-center gap-2">
+      <div
+        suppressHydrationWarning
+        className="mt-4 flex items-center justify-center gap-2"
+      >
         <Paginated
           currentPage={currentPage}
           totalPages={totalPages}

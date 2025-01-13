@@ -8,10 +8,16 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { BsGlobe } from "react-icons/bs";
 import { CiPower } from "react-icons/ci";
-import { useStore } from "@/store/store";
+import { useStore } from "@/store";
 import { BiArrowToLeft, BiArrowToRight } from "react-icons/bi";
 
-export default function SideNav({ setIsCollapsed, isCollapsed }: {  setIsCollapsed: (value: boolean) => void; isCollapsed: boolean }) {
+export default function SideNav({
+  setIsCollapsed,
+  isCollapsed,
+}: {
+  setIsCollapsed: (value: boolean) => void;
+  isCollapsed: boolean;
+}) {
   const { user, loadUser, logout } = useStore();
   const [isMobile, setIsMobile] = useState(false);
 
@@ -50,7 +56,7 @@ export default function SideNav({ setIsCollapsed, isCollapsed }: {  setIsCollaps
       variants={!isMobile ? sideNavVariants : undefined}
     >
       <div
-        className={`p-4 flex items-center justify-center md:items-start md:justify-start transition-all duration-300`}
+        className={`flex items-center justify-center p-4 transition-all duration-300 md:items-start md:justify-start`}
       >
         <Link
           href="/dashboard"
@@ -60,22 +66,22 @@ export default function SideNav({ setIsCollapsed, isCollapsed }: {  setIsCollaps
             className={`h-8 w-8 rotate-[15deg] ${isCollapsed ? "" : ""}`}
           />
           {!isCollapsed && (
-              <motion.span
-                layout
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.125 }}
-                className={`text-xs font-medium ${isMobile ? "hidden" : ""}`}
-              >
-                Reservas App
-              </motion.span>
-            )}
+            <motion.span
+              layout
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.125 }}
+              className={`text-xs font-medium ${isMobile ? "hidden" : ""}`}
+            >
+              Reservas App
+            </motion.span>
+          )}
         </Link>
       </div>
 
       <div className="flex grow justify-between md:flex-col">
         <NavLinks isCollapsed={isCollapsed} isMobile={isMobile} />
-        <div className="flex md:flex-col md:items-start md:justify-start gap-3 p-4">
+        <div className="flex gap-3 p-4 md:flex-col md:items-start md:justify-start">
           <button
             onClick={() => setIsCollapsed(!isCollapsed)}
             className="hidden text-primary md:block"

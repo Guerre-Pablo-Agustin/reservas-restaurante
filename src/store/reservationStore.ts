@@ -48,6 +48,7 @@ export const useReservationStore = create<ReservationStore>((set) => ({
   },
 
   createReservation: async (reservationData: Partial<Reservation>) => {
+    console.log('reservationData', reservationData)
     set({ loading: true })
     try {
       const response = await fetch('/api/reservations', {

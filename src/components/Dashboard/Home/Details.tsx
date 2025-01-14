@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { useStore } from "@/store";
+import { useReservationStore } from "@/store";
 import { Reservation } from "@/types/types";
 import Swal from "sweetalert2";
 import { motion } from "framer-motion";
@@ -12,7 +12,7 @@ type Props = {
 };
 
 const Details = ({ setShowDetails, selectId }: Props) => {
-  const { reservations, updateReservation } = useStore();
+  const { reservations, updateReservation } = useReservationStore();
 
   const selectedReservation = reservations.find(
     (reservation) => reservation.id === selectId,

@@ -3,16 +3,18 @@ import { Reservation } from "@/types/types";
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import Swal from "sweetalert2";
-import { useStore } from "@/store";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import { v4 as uuidv4 } from "uuid";
+import { useReservationStore, useUserStore } from "@/store";
 
 type Props = {
   onClose?: () => void;
   setShowForm?: React.Dispatch<React.SetStateAction<boolean>>;
 };
 const Create = ({ onClose = () => {}, setShowForm = () => {} }: Props) => {
-  const { reservations, createReservation, setReservations } = useStore();
+  const { currentUser } = useUserStore();
+  const { reservations, createReservation, setReservations } =
+    useReservationStore();
 
   const [newReservation, setNewReservation] = useState<Reservation>({
     id: "",
@@ -22,6 +24,8 @@ const Create = ({ onClose = () => {}, setShowForm = () => {} }: Props) => {
     status: "pendiente",
     quantity: 1,
     details: "",
+    phone: "",
+    userId: currentUser?.id || "",
   });
 
   const handleAddReservation = () => {
@@ -49,6 +53,8 @@ const Create = ({ onClose = () => {}, setShowForm = () => {} }: Props) => {
       date: newReservation.date,
       time: newReservation.time,
       quantity: newReservation.quantity,
+      phone: newReservation.phone,
+      userId: currentUser?.id || "",
     };
     createReservation(data);
     setReservations([...reservations, data]);
@@ -66,6 +72,8 @@ const Create = ({ onClose = () => {}, setShowForm = () => {} }: Props) => {
       status: "pendiente",
       quantity: 1,
       details: "",
+      phone: "",
+      userId: currentUser?.id || "",
     });
     setShowForm(false);
   };
@@ -88,23 +96,41 @@ const Create = ({ onClose = () => {}, setShowForm = () => {} }: Props) => {
     >
       <span className="text-center text-2xl font-bold">Crear reserva</span>
       <div className="flex flex-col gap-10 p-4">
-        <div className="flex flex-col gap-2">
-          <label
-            htmlFor="clientName"
-            className="text-sm font-medium text-gray-800"
-          >
-            Cliente
-          </label>
-          <input
-            type="text"
-            name="clientName"
-            value={newReservation.clientName}
-            onChange={handleNewReservationChange}
-            className="w-full rounded-md border-gray-300 p-2 text-sm text-gray-800"
-            placeholder="Nombre del cliente"
-          />
+        <div className="flex flex-col lg:flex-row gap-6">
+          <div className="flex flex-col gap-2">
+            <label
+              htmlFor="clientName"
+              className="text-sm font-medium text-gray-800"
+            >
+              Cliente
+            </label>
+            <input
+              type="text"
+              name="clientName"
+              value={newReservation.clientName}
+              onChange={handleNewReservationChange}
+              className="w-full rounded-md border-gray-300 p-2 text-sm text-gray-800"
+              placeholder="Nombre del cliente"
+            />
+          </div>
+          <div className="flex flex-col gap-2">
+            <label
+              htmlFor="clientName"
+              className="text-sm font-medium text-gray-800"
+            >
+              Telefono
+            </label>
+            <input
+              type="text"
+              name="phone"
+              value={newReservation.phone}
+              onChange={handleNewReservationChange}
+              className="w-full rounded-md border-gray-300 p-2 text-sm text-gray-800"
+              placeholder="Telefono"
+            />
+          </div>
         </div>
-        <div className="flex flex-row gap-16">
+        <div className="flex flex-col lg:flex-row gap-16">
           <div className="flex flex-col gap-2">
             <label htmlFor="date" className="text-sm font-medium text-gray-800">
               Fecha
@@ -133,7 +159,7 @@ const Create = ({ onClose = () => {}, setShowForm = () => {} }: Props) => {
             />
           </div>
         </div>
-        <div className="flex flex-row gap-16">
+        <div className="flex flex-col lg:flex-row gap-16">
           <div className="flex flex-col gap-2">
             <label
               htmlFor="quantity"

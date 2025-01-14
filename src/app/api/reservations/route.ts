@@ -23,10 +23,13 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
-  const { clientName, details, status, date, time, quantity, userId } : Reservation =
+  const { clientName, details, status, date, time, quantity, userId, phone } : Reservation =
     await request.json();
 
-  if (!clientName || !details || !status || !date || !time || !quantity) {
+  console.log('datos', { clientName, details, status, date, time, quantity, userId, phone });
+
+
+  if (!clientName || !details || !status || !date || !time || !quantity || !userId || !phone) {
     return NextResponse.json({
       mensaje: "Error al crear la reserva",
       error: "Todos los campos son obligatorios",
@@ -44,8 +47,11 @@ export async function POST(request: Request) {
         time: time,
         quantity: quantity,
         userId: userId,
+        phone: phone
       },
     });
+
+    console.log("reservation", reservation);
     return NextResponse.json({
       mensaje: "Reserva creada",
       reservation: reservation,

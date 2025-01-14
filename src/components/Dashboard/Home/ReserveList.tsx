@@ -4,7 +4,7 @@ import Swal from "sweetalert2";
 import { useEffect, useState } from "react";
 import Searcher from "./Searcher";
 import Paginated from "./Paginated";
-import { useStore } from "@/store";
+import { useReservationStore, useStore } from "@/store";
 import Create from "./Create";
 import Details from "./Details";
 import { RiDeleteBin5Line } from "react-icons/ri";
@@ -55,7 +55,7 @@ const FormattedDate = ({
 };
 
 const ReserveList = () => {
-  const { reservations, deleteReservation, loadReservations } = useStore();
+  const { reservations, deleteReservation, getReservations } = useReservationStore();
   const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
@@ -86,8 +86,8 @@ const ReserveList = () => {
 
   //carga de datos
   useEffect(() => {
-    loadReservations();
-  }, [loadReservations]);
+    getReservations();
+  }, [getReservations]);
 
   const getStatus = (status: string) => {
     switch (status) {

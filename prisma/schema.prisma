@@ -30,10 +30,11 @@ model Reservation {
   clientName String
   date       String
   time       String
-  quantity   Int
-  status     String   @default("pendiente")
+  quantity   String
+  status     String  
   details    String
   userId     String
+  phone      String
   user       User     @relation(fields: [userId], references: [id])
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt

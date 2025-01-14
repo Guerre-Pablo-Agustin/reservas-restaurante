@@ -10,7 +10,7 @@ export async function POST(request: Request) {
 
     // 2. Buscar el usuario en la base de datos
     const user = await prisma.user.findUnique({
-      where: { email },
+      where: { email: email },
       include: { reservations: true } // Incluir las reservas del usuario
     })
 

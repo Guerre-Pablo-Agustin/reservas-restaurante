@@ -1,4 +1,4 @@
-import { useStore } from "@/store";
+import { useUserStore } from "@/store";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useFormStatus } from "react-dom";
@@ -8,7 +8,7 @@ import { RiEyeCloseLine, RiEyeLine } from "react-icons/ri";
 
 function LoginForm() {
   //store
-  const { login } = useStore();
+  const { login } = useUserStore();
 
   //router
   const router = useRouter();
@@ -21,10 +21,10 @@ function LoginForm() {
   });
   const [error, setError] = useState("");
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      const result = login(userData.email, userData.password);
+      const result = await login(userData.email, userData.password);
       if (result) {
         router.push("/dashboard");
         setUserData({

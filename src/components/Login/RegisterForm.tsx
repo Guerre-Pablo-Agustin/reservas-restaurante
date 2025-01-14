@@ -1,5 +1,6 @@
 "use client";
-import { useStore } from "@/store";
+
+import { useUserStore } from "@/store";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useFormStatus } from "react-dom";
@@ -8,13 +9,11 @@ import { BsKey } from "react-icons/bs";
 import { RiEyeCloseLine, RiEyeLine } from "react-icons/ri";
 import Swal from "sweetalert2";
 
-interface RegisterFormProps {
-  initialId: string;
-}
 
-function RegisterForm({ initialId }: RegisterFormProps) {
+
+function RegisterForm() {
   //store
-  const { createUser } = useStore();
+  const { createUser } = useUserStore();
 
   //router
   const router = useRouter();
@@ -32,52 +31,51 @@ function RegisterForm({ initialId }: RegisterFormProps) {
   });
   const [error, setError] = useState("");
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    setError("");
-
-    if (userData.password !== userData.confirmPassword) {
-      setError("Passwords do not match.");
-      return;
-    }
-
-    try {
-      const newUser = {
-        id: initialId,
-        email: userData.email,
-        name: userData.name,
-        lastName: userData.lastName,
-        image: "/images/avatars/hombre.jpg",
-        password: userData.password,
-      };
-
-      createUser(newUser);
-
-      Swal.fire({
-        title: "Registro exitoso",
-        text: "El usuario ha sido registrado con éxito.",
-        icon: "success",
-        confirmButtonText: "Aceptar",
-      });
-
-      setUserData({
-        id: "",
-        email: "",
-        name: "",
-        lastName: "",
-        image: "",
-        password: "",
-        confirmPassword: "",
-      });
-      router.push("/login");
-    } catch (error) {
-      console.error("Error al registrar el usuario:", error);
-      setError(
-        error instanceof Error
-          ? error.message
-          : "Error al registrar el usuario.",
-      );
-    }
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+      event.preventDefault();
+      setError("");
+  
+      if (userData.password !== userData.confirmPassword) {
+          setError("Passwords do not match.");
+          return;
+      }
+  
+      try {
+          const newUser = {
+              email: userData.email,
+              name: userData.name,
+              lastName: userData.lastName,
+              password: userData.password,
+          };
+  
+          const success = await createUser(newUser); 
+          if (success) {
+              Swal.fire({
+                  title: "Registro exitoso",
+                  text: "El usuario ha sido registrado con éxito.",
+                  icon: "success",
+                  confirmButtonText: "Aceptar",
+              });
+  
+              setUserData({
+                  email: "",
+                  name: "",
+                  lastName: "",
+                  image: "",
+                  id: "",
+                  password: "",
+                  confirmPassword: "",
+              });
+              router.push("/login");
+          }
+      } catch (error) {
+          console.error("Error al registrar el usuario:", error);
+          setError(
+              error instanceof Error
+                  ? error.message
+                  : "Error al registrar el usuario."
+          );
+      }
   };
 
   return (

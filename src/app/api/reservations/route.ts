@@ -1,5 +1,11 @@
 import { NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
+import { Reservation } from "@/types/types";
+
+
+
+console.log("prisma reservation",prisma.reservation)
+
 
 export async function GET() {
   try {
@@ -17,7 +23,7 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
-  const { clientName, details, status, date, time, quantity } =
+  const { clientName, details, status, date, time, quantity, userId } : Reservation =
     await request.json();
 
   if (!clientName || !details || !status || !date || !time || !quantity) {
@@ -27,6 +33,7 @@ export async function POST(request: Request) {
     });
   }
 
+  
   try {
     const reservation = await prisma.reservation.create({
       data: {
@@ -36,6 +43,7 @@ export async function POST(request: Request) {
         date: date,
         time: time,
         quantity: quantity,
+        userId: userId,
       },
     });
     return NextResponse.json({

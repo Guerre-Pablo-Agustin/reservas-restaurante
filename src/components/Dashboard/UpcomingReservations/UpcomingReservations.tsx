@@ -1,7 +1,7 @@
 "use client";
 
+import { useReservationStore } from "@/store";
 import Link from "next/link";
-import { useStore } from "@/store";
 import { useEffect } from "react";
 
 const statusStyles = {
@@ -11,19 +11,20 @@ const statusStyles = {
 };
 
 const UpcomingReservations = () => {
-  const { reservations, loadReservations } = useStore();
+  const { reservations, getReservations } = useReservationStore();
+
+  console.log("reservations", reservations);
 
   useEffect(() => {
-    loadReservations();
-  }, [loadReservations]);
+    getReservations();
+  }, [getReservations]);
 
   // Obtener la fecha actual
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
   // Filtrar y ordenar las reservaciones
-  const upcomingReservations = reservations
-    .filter((reservation) => {
+  const upcomingReservations = reservations.filter((reservation) => {
       const reservationDate = new Date(reservation.date);
       reservationDate.setHours(0, 0, 0, 0);
       return reservationDate >= today;

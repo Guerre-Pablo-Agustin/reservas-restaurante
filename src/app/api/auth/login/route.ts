@@ -7,14 +7,14 @@ export async function POST(request: Request) {
   try {
     // 1. Obtener email y password del body de la petición
     const { email, password } = await request.json()
-
-    // 2. Buscar el usuario en la base de datos
+    console.log('email', email, 'password', password);
+   
     const user = await prisma.user.findUnique({
       where: { email: email },
-      include: { reservations: true } // Incluir las reservas del usuario
+      include: { reservations: true } 
     })
 
-    // 3. Si no existe el usuario, devolver error
+   console.log('user', user);
     if (!user) {
       return NextResponse.json(
         { error: 'Usuario no encontrado' },
@@ -22,8 +22,9 @@ export async function POST(request: Request) {
       )
     }
 
-    // 4. Verificar que la contraseña sea correcta
+  
     const validPassword = await bcrypt.compare(password, user.password)
+    console.log('validPassword', validPassword);
     if (!validPassword) {
       return NextResponse.json(
         { error: 'Contraseña incorrecta' },

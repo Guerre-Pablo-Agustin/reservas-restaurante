@@ -24,16 +24,15 @@ export const useReservationStore = create<ReservationStore>((set) => ({
   },
 
   getReservations: async () => {
-    set({ loading: true })
     try {
-      const response = await fetch('/api/reservations')
-      const data = await response.json()
-      set({ reservations: data, loading: false })
+        const response = await fetch('/api/reservations');
+        const data = await response.json();
+        set({ reservations: data.reservations || [] });
     } catch (error) {
-      console.log('Error al cargar reservaciones', error)
-      set({ error: 'Error al cargar reservaciones', loading: false })
+        console.error('Error al obtener reservas:', error);
+        set({ reservations: [] });
     }
-  },
+},
 
   getReservationById: async (id: string) => {
     set({ loading: true })

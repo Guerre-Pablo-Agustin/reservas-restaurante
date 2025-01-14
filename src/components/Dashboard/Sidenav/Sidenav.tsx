@@ -8,8 +8,8 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { BsGlobe } from "react-icons/bs";
 import { CiPower } from "react-icons/ci";
-import { useStore } from "@/store";
 import { BiArrowToLeft, BiArrowToRight } from "react-icons/bi";
+import { useUserStore } from "@/store";
 
 export default function SideNav({
   setIsCollapsed,
@@ -18,14 +18,14 @@ export default function SideNav({
   setIsCollapsed: (value: boolean) => void;
   isCollapsed: boolean;
 }) {
-  const { user, loadUser, logout } = useStore();
+  const { currentUser, checkAuth, logout } = useUserStore();
   const [isMobile, setIsMobile] = useState(false);
 
   const router = useRouter();
 
   useEffect(() => {
-    loadUser();
-  }, [loadUser]);
+    checkAuth();
+  }, [checkAuth]);
 
   useEffect(() => {
     const handleResize = () => setIsMobile(window.innerWidth < 768);
@@ -46,6 +46,8 @@ export default function SideNav({
     open: { width: "240px", transition: { delay: 0.125 } },
     collapsed: { width: "80px", transition: { delay: 0.125 } },
   };
+
+  console.log("user", currentUser);
 
   return (
     <motion.nav
@@ -93,17 +95,14 @@ export default function SideNav({
               <BiArrowToLeft size={24} />
             )}
           </button>
-          {user?.image ? (
-            <Image
-              src={user.image}
-              alt="Profile"
-              width={40}
-              height={40}
-              className="rounded-full object-cover"
-            />
-          ) : (
-            <div className="h-10 w-10 rounded-full bg-gray-300" />
-          )}
+
+          <Image
+            src="/images/avatars/hombre.jpg"
+            alt="Profile"
+            width={40}
+            height={40}
+            className="rounded-full object-cover"
+          />
           <button
             onClick={handleLogout}
             className="flex items-center gap-2 text-sm font-medium text-gray-800 hover:text-primary"

@@ -16,7 +16,7 @@ export async function PUT(request: Request, { params }: { params: { id: string }
 export async function GET(request: Request, { params }: { params: { id: string } }) {
     const { id } = params;
     try {
-        const user = await prisma.user.findUnique({ where: { id: id } }); 
+        const user = await prisma.user.findUnique({ where: { id: id }, include: { reservations: true } }); 
         return NextResponse.json({ mensaje: "Usuario obtenido", user: user }); 
     } catch (error) {
         return NextResponse.json({ mensaje: "Error al obtener el usuario", error: error }); 

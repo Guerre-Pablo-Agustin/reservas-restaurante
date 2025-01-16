@@ -4,7 +4,7 @@ import Swal from "sweetalert2";
 import { useEffect, useState } from "react";
 import Searcher from "./Searcher";
 import Paginated from "./Paginated";
-import { useReservationStore, useStore } from "@/store";
+import { useReservationStore } from "@/store";
 import Create from "./Create";
 import Details from "./Details";
 import { RiDeleteBin5Line } from "react-icons/ri";

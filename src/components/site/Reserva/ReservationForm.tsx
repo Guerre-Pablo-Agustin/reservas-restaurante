@@ -62,7 +62,7 @@ export default function ReservationForm() {
       time: newReservation.time,
       quantity: newReservation.quantity,
       phone: newReservation.phone,
-      userId: currentuserId,
+      userId: currentuserId ?? "",
     };
     createReservation(data);
     setReservations([...reservations, data]);

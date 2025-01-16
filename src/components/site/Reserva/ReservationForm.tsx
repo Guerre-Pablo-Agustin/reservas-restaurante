@@ -1,6 +1,6 @@
 "use client";
 
-import { useReservationStore } from "@/store";
+import { useReservationStore} from "@/store";
 import { Reservation } from "@/types/types";
 import { useState } from "react";
 import Swal from "sweetalert2";
@@ -9,17 +9,24 @@ import { v4 as uuidv4 } from "uuid";
 export default function ReservationForm() {
   const { reservations, createReservation, setReservations } = useReservationStore();
 
+  const currentuserId = process.env.NEXT_PUBLIC_USER_ID
+
+  
+
   const [newReservation, setNewReservation] = useState<Reservation>({
     id: "",
     clientName: "",
-    phone: "",
     date: "",
     time: "",
     status: "pendiente",
-    quantity: 1,
+    quantity: "1",
     details: "",
+    phone: "",
+    userId: currentuserId ?? "",
   });
 
+
+ 
   const handleNewReservationChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
@@ -28,10 +35,10 @@ export default function ReservationForm() {
     setNewReservation({ ...newReservation, [e.target.name]: e.target.value });
   };
 
-  const handleAddReservation = () => {
+  const handleAddReservation = (event: React.FormEvent) => {
+    event.preventDefault();
     if (
       !newReservation.clientName ||
-      !newReservation.phone ||
       !newReservation.date ||
       !newReservation.time ||
       !newReservation.quantity ||
@@ -49,12 +56,13 @@ export default function ReservationForm() {
     const data = {
       id: uuidv4(),
       clientName: newReservation.clientName,
-      phone: newReservation.phone,
       details: newReservation.details,
       status: newReservation.status as "pendiente" | "confirmada" | "cancelada",
       date: newReservation.date,
       time: newReservation.time,
       quantity: newReservation.quantity,
+      phone: newReservation.phone,
+      userId: currentuserId,
     };
     createReservation(data);
     setReservations([...reservations, data]);
@@ -67,12 +75,13 @@ export default function ReservationForm() {
     setNewReservation({
       id: "",
       clientName: "",
-      phone: "",
       date: "",
       time: "",
       status: "pendiente",
-      quantity: 1,
+      quantity: "1",
       details: "",
+      phone: "",
+      userId:currentuserId || "",
     });
   };
 
@@ -93,11 +102,11 @@ export default function ReservationForm() {
           />
         </div>
         <div className="flex flex-col gap-2 lg:w-1/2">
-          <label htmlFor="clientPhone">Teléfono</label>
+          <label htmlFor="phone">Teléfono</label>
           <input
             type="text"
             id="phone"
-            name="clientPhone"
+            name="phone"
             value={newReservation.phone}
             onChange={handleNewReservationChange}
             required

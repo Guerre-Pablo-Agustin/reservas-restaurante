@@ -14,8 +14,15 @@ export async function DELETE(request: Request, { params }: { params: { id: strin
 export async function GET(request: Request, { params }: { params: { id: string } }) {
     const { id } = params;
     try {
-        const reservation = await prisma.reservation.findUnique({ where: { id: id } }); 
-        return NextResponse.json({ mensaje: "Reserva obtenida", reservation: reservation }); 
+        const reservation = await prisma.reservation.findUnique({
+            where: { id: id },
+        });
+
+        if (!reservation) {
+            return NextResponse.json({ mensaje: "Reserva no encontrada" }, { status: 404 });
+        }
+
+        return NextResponse.json({ mensaje: "Reserva obtenida", reservation: reservation });
     } catch (error) {
         return NextResponse.json({ mensaje: "Error al obtener la reserva", error: error }); 
     }

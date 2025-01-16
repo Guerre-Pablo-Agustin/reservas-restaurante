@@ -1,8 +1,12 @@
 import { NextResponse, NextRequest } from "next/server";
 import prisma from "@/lib/prisma";
 
-export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
-    const { id } = params;
+export async function DELETE(request: NextRequest) {
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get("id");
+    if (!id) {
+        return NextResponse.json({ mensaje: "ID no proporcionado" }, { status: 400 });
+    }
     try {
         const reservation = await prisma.reservation.delete({ where: { id: id } });
         return NextResponse.json({ mensaje: "Reserva eliminada", reservation: reservation });
@@ -11,8 +15,12 @@ export async function DELETE(request: NextRequest, { params }: { params: { id: s
     }
 }
 
-export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
-    const { id } = params;
+export async function GET(request: NextRequest) {
+    const { searchParams } = new URL(request.url);
+    const id = searchParams.get("id");
+    if (!id) {
+        return NextResponse.json({ mensaje: "ID no proporcionado" }, { status: 400 });
+    }
     try {
         const reservation = await prisma.reservation.findUnique({ where: { id: id } });
         if (!reservation) {
@@ -23,6 +31,9 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
         return NextResponse.json({ mensaje: "Error al obtener la reserva", error: error });
     }
 }
+
+
+
 export async function PUT(request: Request, { params }: { params: { id: string } }) {
     const { id } = params;
     const { clientName, details, status, date, time, quantity } = await request.json(); 

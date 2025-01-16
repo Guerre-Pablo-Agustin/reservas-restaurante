@@ -17,7 +17,7 @@ export type Reservation = {
   date: string;
   time: string;
   status: "pendiente" | "confirmada" | "cancelada";
-  quantity: number;
+  quantity: string;
   details: string;
   userId:string
 

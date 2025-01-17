@@ -15,14 +15,15 @@ export default function LoginPage() {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="relative w-full max-w-4xl lg:overflow-hidden bg-white rounded-lg shadow-lg h-screen lg:h-auto">
+      <div className="relative w-full max-w-4xl lg:overflow-hidden bg-white rounded-lg lg:shadow-lg h-screen lg:h-auto">
         <div className="flex flex-col-reverse lg:flex-row">
           {/* Animación para móviles */}
-          <div className="block lg:hidden w-full mt-20">
+          <div className="block lg:hidden w-full">
             <motion.div
               animate={{ y: isLogin ? 0 : '170%' }}
               transition={{ duration: 0.5, ease: 'easeInOut' }}
-              className="w-full bg-blue-600 text-white p-8 flex-col justify-center items-center text-center h-[50vh] flex"
+              className={`w-full bg-blue-600 text-white p-8 flex-col justify-center items-center text-center 
+              flex  ${!isLogin ? 'h-[80vh]' : 'h-[50vh]'}`}
             >
               <h2 className="text-3xl font-bold mb-4">
                 {isLogin ? 'Bienvenido!' : 'Únete a nosotros!'}

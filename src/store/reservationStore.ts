@@ -49,6 +49,8 @@ getReservationById: async (id: string): Promise<Reservation | null> => {
       return null; // Asegúrate de retornar null en caso de error
   }
 },
+
+
   createReservation: async (reservationData: Partial<Reservation>) => {
     console.log('reservationData', reservationData)
     set({ loading: true })

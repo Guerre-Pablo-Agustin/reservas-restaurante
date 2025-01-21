@@ -1,4 +1,4 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 
 export async function DELETE(request: Request, { params }: { params: { id: string } }) {
@@ -12,8 +12,13 @@ export async function DELETE(request: Request, { params }: { params: { id: strin
 }
 
 
-export async function GET(request: Request, { params }: { params: { id: string } }) {
+export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
     const { id } = params;
+    console.log("id 🚀", id);
+
+    if (!id) {
+        return NextResponse.json({ mensaje: "ID no proporcionado" }, { status: 400 });
+    }
 
     try {
         const reservation = await prisma.reservation.findUnique({

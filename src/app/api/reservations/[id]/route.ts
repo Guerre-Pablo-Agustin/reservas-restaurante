@@ -1,16 +1,25 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prisma";
 
-export async function DELETE(request: Request, { params }: { params: { id: string } }) {
-    const { id } = params;
+export async function DELETE(request: NextRequest) {
+    const { pathname } = new URL(request.url);
+    const id = pathname.split("/").pop();
+    console.log("id 🚀", id);
+
+
+    if (!id) {
+        return NextResponse.json({ mensaje: "ID no proporcionado" }, { status: 400 });
+    }
+
     try {
-        const reservation = await prisma.reservation.delete({ where: { id: id } }); 
-        return NextResponse.json({ mensaje: "Reserva eliminada", reservation: reservation }); 
+        const reservation = await prisma.reservation.delete({
+            where: { id: id },
+        });
+        return NextResponse.json({ mensaje: "Reserva eliminada", reservation: reservation });
     } catch (error) {
-        return NextResponse.json({ mensaje: "Error al eliminar la reserva", error: error }); 
+        return NextResponse.json({ mensaje: "Error al eliminar la reserva", error: error });
     }
 }
-
 
 export async function GET(request: NextRequest) {
     const { pathname } = new URL(request.url);
@@ -41,14 +50,22 @@ export async function GET(request: NextRequest) {
     }
 }
 
+export async function PUT(request: NextRequest) {
+    const { pathname } = new URL(request.url);
+    const id = pathname.split("/").pop();
 
-export async function PUT(request: Request, { params }: { params: { id: string } }) {
-    const { id } = params;
-    const { clientName, details, status, date, time, quantity } = await request.json(); 
+    if (!id) {
+        return NextResponse.json({ mensaje: "ID no proporcionado" }, { status: 400 });
+    }
+
+    const { clientName, details, status, date, time, quantity } = await request.json();
     try {
-        const reservation = await prisma.reservation.update({ where: { id: id }, data: { clientName: clientName, details: details, status: status, date: date, time: time, quantity: quantity } }); 
-        return NextResponse.json({ mensaje: "Reserva actualizada", reservation: reservation }); 
+        const reservation = await prisma.reservation.update({
+            where: { id: id },
+            data: { clientName, details, status, date, time, quantity },
+        });
+        return NextResponse.json({ mensaje: "Reserva actualizada", reservation: reservation });
     } catch (error) {
-        return NextResponse.json({ mensaje: "Error al actualizar la reserva", error: error }); 
+        return NextResponse.json({ mensaje: "Error al actualizar la reserva", error: error });
     }
 }

@@ -11,24 +11,36 @@ type Props = {
 };
 
 const Details = ({ selectId }: Props) => {
-  const { reservations, updateReservation } = useReservationStore();
+  const { getReservationById, updateReservation } = useReservationStore();
 
-  const selectedReservation = reservations.find(
-    (reservation) => reservation.id === selectId,
-  );
-
-  const [editableReservation, setEditableReservation] = useState<
-    Partial<Reservation>
-  >(selectedReservation || {});
+  const [reservation, setReservation] = useState<Reservation | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  
+  
+  const [editableReservation, setEditableReservation] = useState<Partial<Reservation>>({});
 
   useEffect(() => {
-    setEditableReservation(selectedReservation || {});
-  }, [selectedReservation]);
+    const fetchReservation = async () => {
+      setLoading(true);
+      const fetchedReservation = await getReservationById(selectId);
+      if (fetchedReservation) {
+        setReservation(fetchedReservation);
+        setEditableReservation(fetchedReservation); 
+      } else {
+        setError("Reserva no encontrada");
+      }
+      setLoading(false);
+    };
+
+    fetchReservation();
+  }, [selectId, getReservationById]);
+
+  if (loading) return <div>Cargando detalles de la reserva...</div>;
+  if (error) return <div>{error}</div>;
 
   const handleChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >,
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
     setEditableReservation((prev) => ({ ...prev, [name]: value }));
@@ -36,17 +48,15 @@ const Details = ({ selectId }: Props) => {
 
   const handlerEditReservation = () => {
     const data = {
-      id: selectedReservation?.id || "",
+      id: reservation?.id || "",
       clientName: editableReservation.clientName,
       details: editableReservation.details,
-      status: editableReservation.status as
-        | "pendiente"
-        | "confirmada"
-        | "cancelada",
+      status: editableReservation.status as "pendiente" | "confirmada" | "cancelada",
       date: editableReservation.date,
       time: editableReservation.time,
       quantity: editableReservation.quantity,
     };
+
     updateReservation(data.id, data);
     Swal.fire({
       title: "¡Reserva actualizada!",
@@ -62,20 +72,13 @@ const Details = ({ selectId }: Props) => {
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: 0.125 }}
       id="create-modal"
-      className="fixed top-24 z-50 w-[89%] items-center justify-center rounded-md border-2 border-gray-300 bg-white p-4 px-4 font-serif shadow-md md:top-5 md:w-[65%]"
+      className="fixed top-24 z-50 w-[90%] items-center justify-center rounded-md bg-white p-4 px-4 font-serif md:top-5 md:w-[65%]"
     >
-      <span className="text-center text-2xl font-bold">
-        Detalles de la reserva
-      </span>
+      <span className="text-center text-2xl font-bold">Detalles de la reserva</span>
 
       <div className="flex flex-col gap-10 p-4">
         <div className="flex flex-col gap-2">
-          <label
-            htmlFor="clientName"
-            className="text-sm font-medium text-gray-800"
-          >
-            Cliente
-          </label>
+          <label htmlFor="clientName" className="text-sm font-medium text-gray-800">Cliente</label>
           <input
             type="text"
             name="clientName"
@@ -88,9 +91,7 @@ const Details = ({ selectId }: Props) => {
 
         <div className="flex flex-row gap-16">
           <div className="flex flex-col gap-2">
-            <label htmlFor="date" className="text-sm font-medium text-gray-800">
-              Fecha
-            </label>
+            <label htmlFor="date" className="text-sm font-medium text-gray-800">Fecha</label>
             <input
               type="date"
               name="date"
@@ -101,9 +102,7 @@ const Details = ({ selectId }: Props) => {
           </div>
 
           <div className="flex flex-col gap-2">
-            <label htmlFor="time" className="text-sm font-medium text-gray-800">
-              Hora
-            </label>
+            <label htmlFor="time" className="text-sm font-medium text-gray-800">Hora</label>
             <input
               type="time"
               name="time"
@@ -116,12 +115,7 @@ const Details = ({ selectId }: Props) => {
 
         <div className="flex flex-row gap-16">
           <div className="flex flex-col gap-2">
-            <label
-              htmlFor="quantity"
-              className="text-sm font-medium text-gray-800"
-            >
-              Cantidad
-            </label>
+            <label htmlFor="quantity" className="text-sm font-medium text-gray-800">Cantidad</label>
             <input
               type="number"
               name="quantity"
@@ -135,12 +129,7 @@ const Details = ({ selectId }: Props) => {
           </div>
 
           <div className="flex w-40 flex-col gap-2">
-            <label
-              htmlFor="status"
-              className="text-sm font-medium text-gray-800"
-            >
-              Estado
-            </label>
+            <label htmlFor="status" className="text-sm font-medium text-gray-800">Estado</label>
             <select
               name="status"
               value={editableReservation.status || ""}
@@ -155,12 +144,7 @@ const Details = ({ selectId }: Props) => {
         </div>
 
         <div className="flex flex-col gap-2">
-          <label
-            htmlFor="details"
-            className="text-sm font-medium text-gray-800"
-          >
-            Detalles
-          </label>
+          <label htmlFor="details" className="text-sm font-medium text-gray-800">Detalles</label>
           <textarea
             name="details"
             value={editableReservation.details || ""}

@@ -11,8 +11,10 @@ export async function DELETE(request: Request, { params }: { params: { id: strin
     }
 }
 
+
 export async function GET(request: Request, { params }: { params: { id: string } }) {
     const { id } = params;
+
     try {
         const reservation = await prisma.reservation.findUnique({
             where: { id: id },
@@ -24,7 +26,11 @@ export async function GET(request: Request, { params }: { params: { id: string }
 
         return NextResponse.json({ mensaje: "Reserva obtenida", reservation: reservation });
     } catch (error) {
-        return NextResponse.json({ mensaje: "Error al obtener la reserva", error: error }); 
+        if (error instanceof Error) {
+            return NextResponse.json({ mensaje: "Error al obtener la reserva", error: error.message }, { status: 500 });
+        } else {
+            return NextResponse.json({ mensaje: "Error desconocido al obtener la reserva" }, { status: 500 });
+        }
     }
 }
 

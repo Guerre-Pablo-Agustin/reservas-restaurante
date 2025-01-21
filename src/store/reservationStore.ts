@@ -8,7 +8,7 @@ interface ReservationStore {
   error: string | null
   getReservations: () => Promise<void>
   setReservations: (reservations: Reservation[]) => void;
-  getReservationById: (id: string) => Promise<void>
+  getReservationById: (id: string) => Promise<Reservation | null>
   createReservation: (reservationData: Partial<Reservation>) => Promise<void>
   updateReservation: (id: string, reservationData: Partial<Reservation>) => Promise<void>
   deleteReservation: (id: string) => Promise<void>
@@ -34,19 +34,21 @@ export const useReservationStore = create<ReservationStore>((set) => ({
     }
 },
 
-  getReservationById: async (id: string) => {
-    set({ loading: true })
-    try {
-      const response = await fetch(`/api/reservations/${id}`)
-      const data = await response.json()
-      set({ loading: false })
-      return data.reservation
-    } catch (error) {
-      console.log('Error al obtener reservación', error)
-      set({ error: 'Error al obtener reservación', loading: false })
-    }
-  },
-
+getReservationById: async (id: string): Promise<Reservation | null> => {
+  set({ loading: true });
+  try {
+      const response = await fetch(`/api/reservations/${id}`);
+      const data = await response.json();
+      set({ loading: false });
+      
+      // Devuelve la reserva o null si no se encuentra
+      return data.reservation || null; 
+  } catch (error) {
+      console.log('Error al obtener reservación', error);
+      set({ error: 'Error al obtener reservación', loading: false });
+      return null; // Asegúrate de retornar null en caso de error
+  }
+},
   createReservation: async (reservationData: Partial<Reservation>) => {
     console.log('reservationData', reservationData)
     set({ loading: true })

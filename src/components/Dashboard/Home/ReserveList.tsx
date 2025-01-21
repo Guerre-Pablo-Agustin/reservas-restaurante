@@ -67,6 +67,8 @@ const ReserveList = () => {
 
   const filteredReservations = reservations.filter(
     (r) =>
+      r?.id.toLowerCase().includes(search.toLowerCase()) ||
+      r?.details.toLowerCase().includes(search.toLowerCase()) ||
       r?.clientName.toLowerCase().includes(search.toLowerCase()) ||
       r?.date.toLowerCase().includes(search.toLowerCase()) ||
       r?.status.toLowerCase().includes(search.toLowerCase()) ||

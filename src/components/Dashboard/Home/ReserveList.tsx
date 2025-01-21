@@ -6,10 +6,10 @@ import Searcher from "./Searcher";
 import Paginated from "./Paginated";
 import { useReservationStore } from "@/store";
 import Create from "./Create";
-import Details from "./Details";
 import { RiDeleteBin5Line } from "react-icons/ri";
 import { CiEdit } from "react-icons/ci";
 import { Tooltip } from "react-tooltip";
+import Link from "next/link";
 
 // Componente del lado del cliente para el formateo de fechas
 const FormattedDate = ({
@@ -67,10 +67,10 @@ const ReserveList = () => {
 
   const filteredReservations = reservations.filter(
     (r) =>
-      r.clientName.toLowerCase().includes(search.toLowerCase()) ||
-      r.date.toLowerCase().includes(search.toLowerCase()) ||
-      r.status.toLowerCase().includes(search.toLowerCase()) ||
-      r.quantity.toString().includes(search.toLowerCase()),
+      r?.clientName.toLowerCase().includes(search.toLowerCase()) ||
+      r?.date.toLowerCase().includes(search.toLowerCase()) ||
+      r?.status.toLowerCase().includes(search.toLowerCase()) ||
+      r?.quantity.toString().includes(search.toLowerCase()),
   );
 
   //paginado
@@ -128,9 +128,6 @@ const ReserveList = () => {
   //crear reserva
   const [showForm, setShowForm] = useState(false);
 
-  //ver detalles
-  const [showDetails, setShowDetails] = useState(false);
-  const [selectId, setSelectId] = useState<string>("");
 
   if (!isClient) {
     return <div suppressHydrationWarning>Cargando...</div>;
@@ -249,15 +246,13 @@ const ReserveList = () => {
                   suppressHydrationWarning
                   className="flex items-center justify-center gap-2 p-2 text-center text-sm"
                 >
+                  <Link rel="stylesheet" href={`/dashboard/${r.id}/edit`} >
                   <button
                     data-tip="Editar"
-                    onClick={() => {
-                      setSelectId(r.id); // Guarda el ID seleccionado
-                      setShowDetails(true); // Muestra el componente Details
-                    }}
                   >
                     <CiEdit className="buton-editar text-2xl text-info" />
                   </button>
+                  </Link>
                   <Tooltip
                     anchorSelect=".buton-editar"
                     place="top"
@@ -290,10 +285,7 @@ const ReserveList = () => {
         <Create setShowForm={setShowForm} onClose={() => setShowForm(false)} />
       )}
 
-      {/* Detalles de reserva */}
-      {showDetails && (
-        <Details selectId={selectId} setShowDetails={setShowDetails} />
-      )}
+      
 
       {/* Paginación */}
       <div

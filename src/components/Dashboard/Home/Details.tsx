@@ -7,11 +7,10 @@ import { motion } from "framer-motion";
 import { CiEdit } from "react-icons/ci";
 
 type Props = {
-  setShowDetails: React.Dispatch<React.SetStateAction<boolean>>;
   selectId: string;
 };
 
-const Details = ({ setShowDetails, selectId }: Props) => {
+const Details = ({ selectId }: Props) => {
   const { reservations, updateReservation } = useReservationStore();
 
   const selectedReservation = reservations.find(
@@ -55,7 +54,6 @@ const Details = ({ setShowDetails, selectId }: Props) => {
       icon: "success",
       confirmButtonText: "Aceptar",
     });
-    setShowDetails(false);
   };
 
   return (
@@ -181,7 +179,6 @@ const Details = ({ setShowDetails, selectId }: Props) => {
           <CiEdit className="buton-editar text-2xl text-info" />
         </button>
         <button
-          onClick={() => setShowDetails(false)}
           className="rounded-full bg-red-500 px-4 py-2 font-bold text-white shadow-md shadow-red-500/50 hover:bg-red-700"
         >
           Cerrar

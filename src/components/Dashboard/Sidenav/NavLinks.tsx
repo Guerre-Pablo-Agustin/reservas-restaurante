@@ -3,14 +3,13 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { BiHome, BiNews } from "react-icons/bi";
-import { BsTabletFill, BsListUl } from "react-icons/bs";
+import { BsListUl } from "react-icons/bs";
 import { motion } from "framer-motion";
 
 const Links = [
   { name: "Inicio", href: "/dashboard", icon: BiHome },
   { name: "Nueva reserva", href: "/dashboard/create", icon: BiNews },
   { name: "Lista de reservas", href: "/dashboard/reservations", icon: BsListUl },
-  { name: "Estadísticas", href: "/dashboard/kanban", icon: BsTabletFill },
 ];
 
 export default function NavLinks({

@@ -12,8 +12,10 @@ export async function DELETE(request: Request, { params }: { params: { id: strin
 }
 
 
-export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
-    const { id } = params;
+export async function GET(request: NextRequest) {
+    const { pathname } = new URL(request.url);
+    const id = pathname.split("/").pop();
+
     console.log("id 🚀", id);
 
     if (!id) {
@@ -38,7 +40,6 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
         }
     }
 }
-
 
 
 export async function PUT(request: Request, { params }: { params: { id: string } }) {

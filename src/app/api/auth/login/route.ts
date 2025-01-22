@@ -3,6 +3,9 @@ import prisma  from '@/lib/prisma'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 
+
+const JWT_SECRET = process.env.JWT_SECRET
+
 export async function POST(request: Request) {
   try {
     // 1. Obtener email y password del body de la petición
@@ -35,7 +38,7 @@ export async function POST(request: Request) {
     // 5. Crear un token JWT
     const token = jwt.sign(
       { userId: user.id },
-      process.env.JWT_SECRET || 'tu-secret-key',
+      JWT_SECRET || 'tu-secret-key',
       { expiresIn: '24h' }
     )
 

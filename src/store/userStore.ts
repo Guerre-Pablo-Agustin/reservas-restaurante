@@ -17,7 +17,7 @@ export const useUserStore = create<UserStore>((set) => ({
     loading: false,
     error: null,
 
-    login: async (mail: string, password: string) => {
+       login: async (mail: string, password: string) => {
         console.log('mail', mail, 'password', password);
         set({ loading: true, error: null });
         try {
@@ -26,14 +26,19 @@ export const useUserStore = create<UserStore>((set) => ({
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email: mail, password })
             });
-
+    
             const data = await response.json();
-            localStorage.setItem('user', JSON.stringify(data.user));
             console.log('data', data);
             if (!response.ok) {
                 throw new Error(data.error);
             }
-
+    
+            // Almacenar el token en las cookies
+            document.cookie = `token=${data.token}; path=/; max-age=3600; secure; HttpOnly`;
+    
+            // Almacenar el usuario en el almacenamiento local
+            localStorage.setItem('user', JSON.stringify(data.user));
+    
             set({ currentUser: data.user, loading: false });
             return true;
         } catch (error) {

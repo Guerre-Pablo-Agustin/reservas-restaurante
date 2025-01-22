@@ -13,7 +13,9 @@ export const data : {
             lastName: "Perez",
             email: "admin@gmail.com",
             password: "123456",
-            image: "/images/avatars/hombre.jpg"
+            image: "/images/avatars/hombre.jpg",
+            role: "admin",
+            reservations: []
         }
     ],
 
@@ -25,8 +27,10 @@ export const data : {
             date: "2025-01-01",
             time: "9:00",
             status: "pendiente",
-            quantity: 2,
-            details: "Detalles de la reserva"
+            quantity: "2",
+            details: "Detalles de la reserva",
+            phone: "123456789",
+            userId: "1"
         },
         {
             id: "2",
@@ -34,9 +38,10 @@ export const data : {
             date: "2025-01-02",
             time: "10:00",
             status: "confirmada",
-            quantity: 6,
-            details: "Detalles de la reserva"
-
+            quantity: "6",
+            details: "Detalles de la reserva",
+            phone: "123456789",
+            userId: "1"
         },
         {
             id: "3",
@@ -44,8 +49,10 @@ export const data : {
             date: "2025-01-03",
             time: "17:00",
             status: "cancelada",
-            quantity: 8,
-            details: "Detalles de la reserva"
+            quantity: "8",
+            details: "Detalles de la reserva",
+            phone: "123456789",
+            userId: "1"
         }
     ]
 }
